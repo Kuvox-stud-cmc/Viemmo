@@ -1,0 +1,12 @@
+{
+  "dataset": "pilot-sft-v1",
+  "status": "passed",
+  "source_records": 2000,
+  "primary_approvals": 2000,
+  "secondary_audits": 200,
+  "pii_findings": 0,
+  "duplicate_findings": 0,
+  "contamination_findings": 0,
+  "overlength_records": 0,
+  "max_chat_template_tokens_observed": 346
+}

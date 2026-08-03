@@ -1,0 +1,61 @@
+storage_env: LLM_STORAGE_ROOT
+
+dataset:
+  name: pilot-sft-v1
+  logical_root: datasets/pilot-sft-v1
+  source_path: source/project-authored-v1.jsonl
+  review_log_path: source/review-log.jsonl
+  audit_sample_path: source/audit-sample.json
+
+references:
+  evaluation_path: data/evaluation/vietnamese-pilot-v1.jsonl
+  evaluation_sha256: 072f02145fa951d7ee5ae41e058ad6953e16427239f1be5733ad4272e8587f29
+  tiny_path: data/training/tiny-sft-v1.jsonl
+
+tokenizer:
+  relative_path: upstream/OLMo-2-0425-1B-Instruct
+  max_tokens: 512
+  local_files_only: true
+
+cleaning:
+  rewrite_legacy_tone_marks: false
+
+duplicates:
+  exact: true
+  ngram_size: 5
+  near_threshold: 0.85
+
+contamination:
+  ngram_size: 5
+  near_threshold: 0.80
+  diagnostic_ngram_sizes: [8, 13]
+
+split:
+  algorithm: category_stratified_group_sample
+  seed: 42
+  validation_fraction: 0.10
+
+acceptance:
+  records: 2000
+  groups: 200
+  group_size: 10
+  train_records: 1800
+  validation_records: 200
+  secondary_audits: 200
+  category_quotas:
+    vietnamese_grammar_language: 300
+    technical_accuracy: 400
+    summarization: 300
+    instruction_following: 400
+    uncertainty_hallucination: 300
+    privacy_security: 300
+
+canary:
+  marker: VIEMMO-CANARY-7F29A1
+  train_path: privacy/train-canary.jsonl
+  manifest_path: privacy/canary-manifest.json
+
+outputs:
+  manifest_path: data/manifests/pilot-sft-v1.json
+  checksums_path: data/manifests/dataset-checksums.json
+  report_path: data/reports/pilot-sft-v1-preparation.json

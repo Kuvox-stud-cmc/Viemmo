@@ -1,0 +1,96 @@
+{
+  "dataset_name": "pilot-sft-v1",
+  "schema_version": "viemmo-sft-v1",
+  "status": "frozen",
+  "source": {
+    "id": "viemmo-project-authored-v1",
+    "type": "project_authored_synthetic",
+    "license": "CC-BY-4.0"
+  },
+  "license_attribution": "Viemmo project contributors, CC BY 4.0",
+  "logical_root": "datasets/pilot-sft-v1",
+  "counts": {
+    "source": 2000,
+    "groups": 200,
+    "train": 1800,
+    "validation": 200,
+    "primary_approvals": 2000,
+    "secondary_audits": 200,
+    "canary_train": 1805,
+    "canary_records": 5
+  },
+  "category_distribution": {
+    "source": {
+      "instruction_following": 400,
+      "privacy_security": 300,
+      "summarization": 300,
+      "technical_accuracy": 400,
+      "uncertainty_hallucination": 300,
+      "vietnamese_grammar_language": 300
+    },
+    "train": {
+      "instruction_following": 360,
+      "privacy_security": 270,
+      "summarization": 270,
+      "technical_accuracy": 360,
+      "uncertainty_hallucination": 270,
+      "vietnamese_grammar_language": 270
+    },
+    "validation": {
+      "instruction_following": 40,
+      "privacy_security": 30,
+      "summarization": 30,
+      "technical_accuracy": 40,
+      "uncertainty_hallucination": 30,
+      "vietnamese_grammar_language": 30
+    }
+  },
+  "split": {
+    "algorithm": "category-stratified deterministic group sampling",
+    "unit": "group_id",
+    "seed": 42,
+    "validation_fraction": 0.1
+  },
+  "review": {
+    "primary_approvals": 2000,
+    "secondary_audits": 200,
+    "audit_selection": {
+      "method": "frozen category-stratified human-reviewed ID list",
+      "seed": null,
+      "records": 200,
+      "sha256": "6106b1e0ed5a26a316a44e419e8b08c90311c0082adf0c9d903bcd58891af566",
+      "logical_path": "audit-sample.json"
+    },
+    "reviewed_source_sha256": "3231ed7162e29579598953d13297b69fa4bc22ab4ab7c36bf7eea9f5e4f3e15d",
+    "review_log_sha256": "8171a9b62fe05982963dba9b11cdb33bddbf68208fd05ec695e1821ecc8e2a61"
+  },
+  "cleaning": {
+    "unicode": "NFC",
+    "line_endings": "LF",
+    "html_entities": "decoded",
+    "html_tags": "removed",
+    "rewrite_legacy_tone_marks": false
+  },
+  "checks": {
+    "max_chat_template_tokens": 512,
+    "max_chat_template_tokens_observed": 346,
+    "exact_duplicates": 0,
+    "near_duplicate_threshold": 0.85,
+    "pii_findings": 0,
+    "contamination_findings": 0,
+    "contamination_5gram_threshold": 0.8,
+    "diagnostic_ngrams": [
+      8,
+      13
+    ]
+  },
+  "frozen_evaluation_sha256": "072f02145fa951d7ee5ae41e058ad6953e16427239f1be5733ad4272e8587f29",
+  "canonical_lf_sha256": {
+    "tiny": "ac794f9c7599ab4651d0942cb5aa0984d6443092e580b86e5d0246c0f708a90c",
+    "train": "e3ee4b1853eb5cc43218cc5d245f625a520d2aa14b2e96b2eadd711c5e0e15e4",
+    "validation": "ef458670814ab2ad8cf97bb5af9d3e1c88f07d7b553d73a350ede74196ed57d9",
+    "train_canary": "6990d30797e17750b67e8766bccb5f164323722809591f54b62c15b4bd206aa7",
+    "canary_manifest": "aa1d2b2a3e27894d3a9cbb03640e2cf76cecf19b97797e467bdb729a7f184f00"
+  },
+  "canary_policy": "Canonical train/validation are canary-free; use a dedicated canary adapter."
+}
