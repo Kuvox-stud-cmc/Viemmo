@@ -1,0 +1,16 @@
+{
+  "dataset": "tiny-sft-v1",
+  "status": "passed",
+  "records": 30,
+  "categories": 6,
+  "records_per_category": 5,
+  "max_chat_template_tokens": 236,
+  "token_limit": 512,
+  "pii_findings": 0,
+  "duplicate_findings": 0,
+  "contamination_findings": 0,
+  "recorded_independent_human_approvals": 30,
+  "required_independent_human_approvals": 30,
+  "evaluation_sha256": "072f02145fa951d7ee5ae41e058ad6953e16427239f1be5733ad4272e8587f29",
+  "dataset_sha256": "ac794f9c7599ab4651d0942cb5aa0984d6443092e580b86e5d0246c0f708a90c"
+}

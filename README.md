@@ -99,14 +99,14 @@ pip install -r requirements.txt
 
 ### Current phase
 
-- [ ] Author the tiny Vietnamese SFT dataset
-- [ ] Build the cleaning, normalization, and deduplication pipeline
-- [ ] Add PII and evaluation-contamination checks
-- [ ] Complete the training-data manifest and Data Card
+- [x] Author the tiny Vietnamese SFT dataset
+- [x] Build the cleaning, normalization, and deduplication pipeline
+- [x] Add PII and evaluation-contamination checks
+- [x] Complete the training-data manifest and Data Card
 
 ### Planned
 
-- [ ] Create a tiny Vietnamese SFT dataset
+- [x] Create a tiny Vietnamese SFT dataset
 - [ ] Run a QLoRA overfitting test
 - [ ] Save and reload the LoRA adapter
 - [ ] Run a small pilot fine-tune
@@ -754,7 +754,7 @@ Confidential data should remain local unless the university infrastructure has e
 The pilot is complete when:
 
 - [x] Original model evaluation is frozen
-- [ ] Vietnamese dataset is documented and licensed
+- [x] Vietnamese dataset is documented and licensed
 - [ ] Tiny QLoRA run successfully overfits
 - [ ] LoRA adapter saves and reloads correctly
 - [ ] Pilot fine-tuning improves held-out Vietnamese accuracy
@@ -767,6 +767,8 @@ The pilot is complete when:
 
 ## Current next action
 
-Author and validate:
+Run the tiny-overfit experiment using the reviewed and frozen dataset:
 
 `data/training/tiny-sft-v1.jsonl`
+
+The tracked Phase 3 preparation pipeline and governance documents are described in [`data/README.md`](data/README.md). The reviewed 2,000-record pilot dataset is frozen externally; pilot training remains gated on success of the tiny-overfit experiment.

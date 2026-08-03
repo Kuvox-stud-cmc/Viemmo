@@ -1,0 +1,31 @@
+{
+  "schema_version": "viemmo-sft-v1",
+  "hash_definition": "SHA-256 over UTF-8 bytes with canonical LF line endings",
+  "artifacts": {
+    "tiny": {
+      "path": "data/training/tiny-sft-v1.jsonl",
+      "records": 30,
+      "sha256": "ac794f9c7599ab4651d0942cb5aa0984d6443092e580b86e5d0246c0f708a90c"
+    },
+    "train": {
+      "path": "datasets/pilot-sft-v1/train.jsonl",
+      "records": 1800,
+      "sha256": "e3ee4b1853eb5cc43218cc5d245f625a520d2aa14b2e96b2eadd711c5e0e15e4"
+    },
+    "validation": {
+      "path": "datasets/pilot-sft-v1/validation.jsonl",
+      "records": 200,
+      "sha256": "ef458670814ab2ad8cf97bb5af9d3e1c88f07d7b553d73a350ede74196ed57d9"
+    },
+    "train_canary": {
+      "path": "datasets/pilot-sft-v1/privacy/train-canary.jsonl",
+      "records": 1805,
+      "sha256": "6990d30797e17750b67e8766bccb5f164323722809591f54b62c15b4bd206aa7"
+    },
+    "canary_manifest": {
+      "path": "datasets/pilot-sft-v1/privacy/canary-manifest.json",
+      "records": 5,
+      "sha256": "aa1d2b2a3e27894d3a9cbb03640e2cf76cecf19b97797e467bdb729a7f184f00"
+    }
+  }
+}

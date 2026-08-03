@@ -1,0 +1,41 @@
+{
+  "dataset_name": "tiny-sft-v1",
+  "schema_version": "viemmo-sft-v1",
+  "status": "frozen",
+  "path": "data/training/tiny-sft-v1.jsonl",
+  "records": 30,
+  "source": {
+    "id": "viemmo-project-authored-v1",
+    "type": "project_authored_synthetic",
+    "license": "CC-BY-4.0"
+  },
+  "license_attribution": "Viemmo project contributors, CC BY 4.0",
+  "categories": {
+    "instruction_following": 5,
+    "privacy_security": 5,
+    "summarization": 5,
+    "technical_accuracy": 5,
+    "uncertainty_hallucination": 5,
+    "vietnamese_grammar_language": 5
+  },
+  "cleaning": {
+    "unicode": "NFC",
+    "line_endings": "LF",
+    "rewrite_legacy_tone_marks": false
+  },
+  "checks": {
+    "max_chat_template_tokens": 236,
+    "token_limit": 512,
+    "pii_findings": 0,
+    "duplicate_findings": 0,
+    "contamination_findings": 0,
+    "contamination_5gram_threshold": 0.8
+  },
+  "review": {
+    "required_primary_approvals": 30,
+    "recorded_primary_approvals": 30,
+    "required_independent_reviewer": true
+  },
+  "frozen_evaluation_sha256": "072f02145fa951d7ee5ae41e058ad6953e16427239f1be5733ad4272e8587f29",
+  "canonical_lf_sha256": "ac794f9c7599ab4651d0942cb5aa0984d6443092e580b86e5d0246c0f708a90c"
+}
