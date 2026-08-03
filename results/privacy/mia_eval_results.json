@@ -1,0 +1,9 @@
+{
+  "mean_train_loss": 1.85,
+  "mean_val_loss": 2.11,
+  "train_perplexity": 6.36,
+  "val_perplexity": 8.25,
+  "perplexity_gap_ratio": 0.8768,
+  "mia_auc_roc": 1.0,
+  "privacy_threshold_passed": false
+}
