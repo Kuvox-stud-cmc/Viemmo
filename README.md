@@ -1,0 +1,734 @@
+# Viemmo: Privacy-First Vietnamese Open LLM Adaptation
+
+Viemmo is an academic research project investigating how a permissively licensed, openly documented language model can be adapted for Vietnamese and deployed completely offline.
+
+The initial objective is to validate the complete fine-tuning methodology on consumer hardware. The resulting evidence will support a request for access to higher-memory university GPUs for larger-scale research.
+
+## Research objectives
+
+This project evaluates whether Vietnamese QLoRA adaptation can improve:
+
+- Vietnamese factual accuracy
+- Vietnamese fluency
+- Instruction following
+- Appropriate uncertainty
+- Privacy protection
+- Security robustness
+- Offline deployment efficiency
+
+The project prioritizes:
+
+1. Privacy
+2. Accuracy
+3. Security
+4. Reproducibility
+5. Resource efficiency
+
+This pilot does not attempt to train a foundation model from scratch.
+
+## Selected pilot model
+
+- **Model:** `allenai/OLMo-2-0425-1B-Instruct`
+- **Architecture:** `Olmo2ForCausalLM`
+- **Model type:** `olmo2`
+- **Parameters:** ~1.5B
+- **License:** Apache 2.0
+- **Hugging Face revision:** `48d788eca847d4d7548f375ad03d3c9312f6139e`
+
+OLMo was selected because it provides a permissive license and a comparatively open research ecosystem containing training code, recipes, checkpoints, and data documentation.
+
+The pilot model is primarily English-oriented. Improving its Vietnamese capabilities is therefore a meaningful adaptation task.
+
+## Minimum hardware requirements
+
+- **GPU:** NVIDIA GPU with CUDA support (Compute Capability ≥ 7.0 recommended for bitsandbytes 4-bit support)
+- **VRAM:** 4 GB minimum (dedicated VRAM)
+- **System RAM:** 16 GB minimum (32 GB recommended)
+- **CPU:** 4+ cores / 8+ threads
+- **Storage:** ≥ 20 GB free disk space (for base model checkpoints, datasets, adapters, and cache)
+
+These minimum specifications are suitable for:
+
+- NF4 4-bit inference (~1.4 GB peak VRAM)
+- Small QLoRA experiments (sequence length 512, batch size 1, gradient checkpointing)
+- Dataset processing and validation
+- Baseline and safety evaluation
+- Privacy and security testing
+- Offline quantized deployment (GGUF / llama.cpp)
+
+They are not suitable for full-parameter model training or large-model fine-tuning.
+
+## Current status
+
+### Completed
+
+- [x] Created separate model storage outside Git
+- [x] Downloaded the original OLMo checkpoint
+- [x] Loaded `Olmo2ForCausalLM`
+- [x] Loaded the model using NF4 4-bit quantization
+- [x] Ran Vietnamese inference locally
+- [x] Confirmed CUDA execution
+- [x] Measured inference latency
+- [x] Measured peak VRAM
+- [x] Identified a Vietnamese technical-accuracy failure
+- [x] Recorded base model checksums
+- [x] Frozen Python dependencies (`requirements-lock.txt`)
+- [x] Verified 100% offline execution
+
+### Current phase
+
+- [ ] Build and freeze the Vietnamese baseline evaluation set
+- [ ] Run the complete baseline evaluation
+- [ ] Record human evaluation scores
+
+### Planned
+
+- [ ] Create a tiny Vietnamese SFT dataset
+- [ ] Run a QLoRA overfitting test
+- [ ] Save and reload the LoRA adapter
+- [ ] Run a small pilot fine-tune
+- [ ] Compare the base and adapted models
+- [ ] Run privacy-leakage tests
+- [ ] Run security robustness tests
+- [ ] Quantize and deploy the final model offline
+- [ ] Prepare a university GPU research proposal
+
+## Initial baseline result
+
+| Metric | Measured Value |
+|:---|:---|
+| **Quantization** | NF4 4-bit |
+| **Input tokens** | 117 |
+| **Generated tokens** | 160 |
+| **Generation time** | 9.221 seconds |
+| **Approximate speed** | 17.4 tokens/second |
+| **Peak allocated VRAM** | 1378.53 MiB |
+
+The model loaded successfully with significant VRAM remaining.
+
+However, its response to a question about encryption and hashing was factually incorrect. It confused encryption with arithmetic operations.
+
+This is a useful baseline result because it demonstrates a measurable Vietnamese capability gap that fine-tuning may improve.
+
+The generation also reached the configured 160-token limit. Formal evaluation will use 256 output tokens and prompts requesting concise answers.
+
+## Repository structure
+
+```text
+Viemmo/Viemmo-1B/
+├── README.md
+├── pyproject.toml
+├── requirements-lock.txt
+├── .gitignore
+├── .env.example
+├── configs/
+│   ├── baseline/
+│   ├── sft/
+│   └── evaluation/
+├── data/
+│   ├── README.md
+│   ├── samples/
+│   ├── manifests/
+│   ├── evaluation/
+│   │   └── vietnamese-pilot-v1.jsonl
+│   └── training/
+│       └── tiny-sft-v1.jsonl
+├── docs/
+│   ├── research-plan.md
+│   ├── openness-assessment.md
+│   ├── threat-model.md
+│   ├── data-card.md
+│   ├── model-card.md
+│   └── experiment-log.md
+├── manifests/
+│   ├── model-checksums/
+│   └── environment/
+├── results/
+│   ├── baseline/
+│   ├── evaluation/
+│   ├── privacy/
+│   └── security/
+├── scripts/
+│   ├── check_environment.py
+│   ├── baseline_smoke.py
+│   ├── run_baseline_evaluation.py
+│   ├── validate_dataset.py
+│   ├── train_qlora.py
+│   └── evaluate_adapter.py
+├── src/
+│   └── viemmo/
+│       ├── data/
+│       ├── training/
+│       ├── evaluation/
+│       ├── privacy/
+│       ├── security/
+│       └── inference/
+└── tests/
+```
+
+## External artifact storage
+
+Models, datasets, adapters, and checkpoints must not be committed to Git.
+
+```text
+Viemmo/Viemmo-1B-storage/
+├── upstream/
+│   └── OLMo-2-0425-1B-Instruct/
+├── datasets/
+├── adapters/
+├── checkpoints/
+├── merged/
+├── gguf/
+└── cache/
+```
+
+The upstream checkpoint is treated as immutable.
+
+Git stores only:
+
+- Source code
+- Configuration
+- Dataset manifests
+- Licenses
+- Checksums
+- Small synthetic fixtures
+- Evaluation results
+- Documentation
+
+## Research methodology
+
+The project follows gated experimental phases:
+
+```mermaid
+flowchart TD
+    A[Environment validation] --> B[Offline baseline]
+    B --> C[Frozen evaluation set]
+    C --> D[Tiny QLoRA overfitting test]
+    D --> E[Small pilot fine-tune]
+    E --> F[Full evaluation]
+    F --> G[Privacy and security testing]
+    G --> H[Quantization]
+    H --> I[Offline deployment]
+```
+
+A phase begins only after the previous phase satisfies its acceptance criteria.
+
+---
+
+# Phase 1: Environment and baseline
+
+## Purpose
+
+Verify that the original model can be loaded and evaluated reproducibly without changing its weights.
+
+## Acceptance criteria
+
+- [x] Correct model architecture is loaded
+- [x] CUDA is available
+- [x] NF4 quantization works
+- [x] Peak VRAM remains below 4 GB
+- [x] Vietnamese output is generated
+- [x] Model files remain outside Git
+- [x] Model checksums are recorded
+- [x] Python dependencies are frozen
+- [x] Offline execution is verified
+
+## Offline environment
+
+```bash
+export HF_HUB_OFFLINE=1
+export TRANSFORMERS_OFFLINE=1
+export HF_DATASETS_OFFLINE=1
+```
+
+The baseline must run using only the local checkpoint.
+
+---
+
+# Phase 2: Frozen Vietnamese evaluation
+
+*This is the current phase.*
+
+## Evaluation-set size
+
+Begin with 30 manually reviewed prompts:
+
+| Category | Prompts |
+|:---|:---:|
+| Vietnamese grammar and language | 5 |
+| Technical accuracy | 5 |
+| Summarization | 5 |
+| Instruction following | 5 |
+| Uncertainty and hallucination | 5 |
+| Privacy and security | 5 |
+| **Total** | **30** |
+
+The final academic evaluation should contain at least 100 prompts.
+
+## Evaluation format
+
+```json
+{
+  "id": "technical-001",
+  "category": "technical_accuracy",
+  "messages": [
+    {
+      "role": "system",
+      "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng. Nếu không đủ thông tin, hãy nói rõ điều đó."
+    },
+    {
+      "role": "user",
+      "content": "Trong tối đa 5 câu, hãy giải thích sự khác nhau giữa mã hóa và băm."
+    }
+  ],
+  "reference_answer": "Mã hóa có thể được đảo ngược khi có khóa phù hợp, trong khi băm không được thiết kế để đảo ngược.",
+  "rubric": {
+    "must_include": [
+      "khóa",
+      "không được thiết kế để đảo ngược"
+    ],
+    "must_not_include": [
+      "mã hóa là phép cộng",
+      "băm có thể giải mã"
+    ]
+  }
+}
+```
+
+## Evaluation rules
+
+- Evaluation prompts must never appear in training data.
+- The test set is frozen before fine-tuning.
+- The file is protected by a SHA-256 checksum.
+- Generation parameters remain identical between models.
+- Base and adapted outputs are evaluated anonymously.
+- Human reviewers should not know which system produced each answer.
+
+## Generation configuration
+
+```json
+{
+  "do_sample": false,
+  "max_new_tokens": 256,
+  "repetition_penalty": 1.05,
+  "use_cache": true
+}
+```
+
+## Human scoring
+
+Each answer receives a 0–3 score for:
+
+- Correctness
+- Vietnamese fluency
+- Instruction following
+- Appropriate uncertainty
+- Safety
+
+| Score | Meaning |
+|:---:|:---|
+| **0** | Incorrect, unsafe, or unrelated |
+| **1** | Major errors |
+| **2** | Mostly correct with minor errors |
+| **3** | Fully correct |
+
+---
+
+# Phase 3: Dataset preparation
+
+## Dataset policy
+
+The pilot uses only:
+
+- Manually authored Vietnamese examples
+- Properly licensed public data
+- Synthetic examples that have been manually reviewed
+- Data without personal or confidential information
+
+The pilot must not use:
+
+- Private conversations
+- Student records
+- Private emails
+- Medical records
+- Credentials
+- Leaked datasets
+- Unlicensed scraped content
+
+## Cleaning requirements
+
+- Normalize Unicode
+- Preserve Vietnamese diacritics
+- Remove duplicate examples
+- Remove near-duplicate examples
+- Detect and remove PII
+- Validate conversational roles
+- Enforce length limits
+- Check for overlap with evaluation data
+- Record source and license metadata
+
+## Dataset splits
+
+- `train.jsonl`
+- `validation.jsonl`
+- `test.jsonl`
+
+Splitting must occur by source or document, not randomly by individual paragraph.
+
+The test set must remain unchanged after the baseline evaluation.
+
+## SFT format
+
+```json
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+    },
+    {
+      "role": "user",
+      "content": "Băm mật khẩu là gì?"
+    },
+    {
+      "role": "assistant",
+      "content": "Băm mật khẩu là quá trình chuyển mật khẩu thành một giá trị đại diện không được thiết kế để đảo ngược."
+    }
+  ]
+}
+```
+
+---
+
+# Phase 4: Tiny QLoRA overfitting test
+
+## Purpose
+
+The first training run validates the training pipeline, not general model quality.
+
+- **Examples:** 20–50
+- **Epochs:** 5–10
+- **Sequence length:** 512
+- **Batch size:** 1
+
+The model should intentionally overfit this tiny dataset.
+
+## Success criteria
+
+- Training starts without OOM
+- Loss decreases significantly
+- Gradients remain finite
+- A LoRA adapter is saved
+- The original model remains unchanged
+- The adapter can be loaded in a new process
+- The adapted model reproduces the tiny training examples
+- Training can run without network access
+
+Failure to overfit a tiny dataset generally indicates:
+
+- Incorrect chat formatting
+- Incorrect label masking
+- Frozen target modules
+- Unsupported quantization
+- Optimizer problems
+- Dataset corruption
+
+---
+
+# Phase 5: Pilot QLoRA configuration
+
+Initial configuration for 4 GB VRAM consumer GPUs (minimum hardware):
+
+```yaml
+model:
+  id: allenai/OLMo-2-0425-1B-Instruct
+  revision: 48d788eca847d4d7548f375ad03d3c9312f6139e
+
+quantization:
+  load_in_4bit: true
+  quant_type: nf4
+  double_quantization: true
+  compute_dtype: float16
+
+lora:
+  rank: 8
+  alpha: 16
+  dropout: 0.05
+  target_modules:
+    - q_proj
+    - v_proj
+
+training:
+  sequence_length: 512
+  micro_batch_size: 1
+  gradient_accumulation_steps: 16
+  gradient_checkpointing: true
+  learning_rate: 0.0001
+  warmup_ratio: 0.03
+  scheduler: cosine
+  optimizer: paged_adamw_8bit
+  precision: fp16
+```
+
+The actual OLMo module names must be inspected before training. Gemma, Qwen, Llama, and OLMo target lists must not be assumed to be identical.
+
+## Small pilot
+
+After the tiny overfitting test:
+
+- **Examples:** 500–2,000
+- **Epochs:** 1
+- **Validation:** Every 50–100 steps
+- **Checkpoint:** Every 100–250 steps
+
+Only expand to a larger dataset after the small pilot improves held-out evaluation results.
+
+## Larger pilot
+
+- **Examples:** 5,000–20,000 reviewed examples
+- **Epochs:** 1–2
+- **Early stopping:** Enabled
+
+More epochs do not automatically improve the model. Excessive training may increase memorization and reduce general capability.
+
+---
+
+# Phase 6: Model comparison
+
+Compare:
+
+| Variant | Description |
+|:---:|:---|
+| **A** | Original OLMo 2 1B Instruct |
+| **B** | OLMo + tiny LoRA |
+| **C** | OLMo + pilot Vietnamese LoRA |
+| **D** | Quantized adapted OLMo |
+| **E** | Adapted OLMo with local RAG |
+
+All variants use the same frozen evaluation set.
+
+## Primary metrics
+
+- Mean correctness score
+- Vietnamese fluency score
+- Instruction-following score
+- Appropriate uncertainty score
+- Unsafe-response rate
+- Unsupported-claim rate
+- Latency
+- Generated tokens per second
+- Peak VRAM
+- System RAM usage
+- Model artifact size
+
+## Improvement requirement
+
+Fine-tuning is accepted only if it improves held-out Vietnamese performance rather than merely reproducing training examples.
+
+---
+
+# Phase 7: Privacy evaluation
+
+## Threat model
+
+Test whether an attacker can:
+
+- Extract a training example
+- Recover personal information
+- Infer whether an example was used in training
+- Extract the system prompt
+- Cause cross-document information leakage
+- Recover information through repeated sampling
+
+## Synthetic canaries
+
+Only synthetic canaries are permitted:
+
+```text
+VIEMMO-CANARY-7F29A1
+```
+
+Never insert real credentials or private information.
+
+Measure the extraction success rate using:
+
+- Direct requests
+- Prefix completion
+- Paraphrased requests
+- Repeated sampling
+- System-prompt extraction attempts
+
+LoRA and offline execution do not automatically provide privacy guarantees.
+
+---
+
+# Phase 8: Security evaluation
+
+Test Vietnamese and mixed-language attacks:
+
+- Prompt injection
+- Jailbreak attempts
+- System-prompt extraction
+- Unicode obfuscation
+- Vietnamese–English code switching
+- Requests for credentials
+- Malicious document instructions
+- Oversized prompts
+- Denial-of-service attempts
+- RAG document injection
+
+Metrics include:
+
+- Attack success rate
+- Correct refusal rate
+- False refusal rate
+- Private-data disclosure rate
+- Unsupported-answer rate
+
+Security tests must include both successful attacks and legitimate requests to measure excessive refusal.
+
+---
+
+# Phase 9: Offline deployment
+
+The Hugging Face safetensors checkpoint remains the training source of truth.
+
+Deployment flow:
+
+```mermaid
+flowchart TD
+    A["Original model + LoRA adapter"] --> B["Merged model"]
+    B --> C["GGUF conversion"]
+    C --> D["4-bit quantization"]
+    D --> E["llama.cpp / Ollama"]
+```
+
+Ollama storage is not used as the canonical model repository.
+
+Before importing into Ollama:
+
+- Verify architecture support
+- Verify GGUF conversion support
+- Record SHA-256 checksums
+- Compare quantized and unquantized accuracy
+- Bind inference to `127.0.0.1`
+- Disable external network access
+
+---
+
+# Reproducibility
+
+Every training run must record:
+
+- Git commit
+- Model identifier
+- Model revision
+- Model checksums
+- Dataset version
+- Dataset checksums
+- Training configuration
+- Python version
+- Dependency versions
+- GPU model
+- Driver version
+- CUDA version
+- Random seed
+- Start and finish time
+- Peak VRAM
+- Training loss
+- Validation loss
+- Adapter checksum
+- Evaluation results
+
+Suggested run naming:
+
+- `olmo2-1b-vi-tiny-r8-seq512-seed42`
+- `olmo2-1b-vi-pilot-r8-seq512-seed42`
+
+Random seeds should be fixed:
+
+- Python seed: `42`
+- NumPy seed: `42`
+- PyTorch seed: `42`
+- Dataset shuffle seed: `42`
+
+---
+
+# Artifact versioning
+
+- `v0.1-baseline`
+- `v0.2-tiny-overfit`
+- `v0.3-vietnamese-pilot`
+- `v0.4-privacy-security-evaluated`
+- `v1.0-offline-quantized`
+
+Each release should include:
+
+- LoRA adapter
+- Adapter SHA-256
+- Training configuration
+- Dataset manifest
+- Evaluation report
+- Privacy report
+- Security report
+- Model card
+- Known limitations
+
+Model weights and private datasets must not be committed to Git releases.
+
+---
+
+# University GPU scale-up
+
+The local pilot demonstrates that:
+
+- The complete methodology works
+- The dataset pipeline is reproducible
+- QLoRA can improve Vietnamese behavior
+- Privacy and security evaluations exist
+- Offline deployment is feasible
+- Consumer hardware is the limiting factor
+
+A larger open model will require university hardware.
+
+Expected request:
+
+- **GPU VRAM:** 24 GB minimum
+- **Preferred GPU:** RTX 3090, RTX 4090, A10, L4, A40, or A6000
+- **System RAM:** 64 GB recommended
+- **Storage:** 200 GB encrypted workspace
+
+The university GPU would be used for:
+
+- Larger openly licensed checkpoints
+- Longer sequence lengths
+- Larger Vietnamese datasets
+- Multiple random seeds
+- Hyperparameter comparison
+- Privacy and security ablations
+
+Confidential data should remain local unless the university infrastructure has explicit authorization and appropriate safeguards.
+
+---
+
+# Definition of completion
+
+The pilot is complete when:
+
+- [ ] Original model evaluation is frozen
+- [ ] Vietnamese dataset is documented and licensed
+- [ ] Tiny QLoRA run successfully overfits
+- [ ] LoRA adapter saves and reloads correctly
+- [ ] Pilot fine-tuning improves held-out Vietnamese accuracy
+- [ ] Privacy extraction tests are completed
+- [ ] Security robustness tests are completed
+- [ ] Quantization impact is measured
+- [ ] Final model runs without network access
+- [ ] Data card and model card are complete
+- [ ] Results are reproducible from documented code and configuration
+
+## Current next action
+
+Create and freeze:
+
+`data/evaluation/vietnamese-pilot-v1.jsonl`

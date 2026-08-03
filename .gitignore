@@ -1,0 +1,45 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# Local configuration
+.env
+*.local
+
+# Local environment static files
+manifests/environment/*
+
+# Models and training artifacts
+artifacts/
+models/
+checkpoints/
+adapters/
+merged/
+gguf/
+outputs/
+*.safetensors
+*.gguf
+*.bin
+*.pt
+*.pth
+
+# Datasets
+data/raw/
+data/processed/
+data/private/
+*.parquet
+*.arrow
+
+# Experiment trackers
+wandb/
+runs/
+tensorboard/
+
+# Editor and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
