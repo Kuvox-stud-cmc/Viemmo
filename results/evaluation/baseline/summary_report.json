@@ -1,0 +1,12 @@
+{
+  "model_id": "allenai/OLMo-2-0425-1B-Instruct",
+  "variant": "Variant A (Base OLMo 2 1B Instruct)",
+  "quantization": "NF4 4-bit with bfloat16 compute",
+  "benchmark_file": "data\\evaluation\\vietnamese-pilot-v1.jsonl",
+  "total_prompts": 30,
+  "total_generated_tokens": 7113,
+  "total_elapsed_seconds": 178.41,
+  "mean_tokens_per_second": 39.87,
+  "automated_rubric_pass_rate": "3/30 (10.0%)",
+  "peak_vram_mib": 1380.5
+}

@@ -13,9 +13,9 @@
       "content": "Hãy giải thích ngắn gọn sự khác nhau giữa mã hoá và băm. Đưa ra một ví dụ thực tế cho mỗi khái niệm. "
     }
   ],
-  "answer": "Mã hoá là một phần quan trọng trong việc xử lý các vấn đề liên quan đến mã số, cụ thể như:\n\n1. **Mã hoá tính toán**: Mã hoá tính toán có thể được thiết kế để tính toán số liệu có thể xuất hiện trong một dạng mã số (như số nguyên, số phần mềm, số tự nhiên). Các tính toán này có thể bao gồm:\n\n   - **Addition**: + (kết quả của a + b)\n   - **Subtraction**: -(kết quả",
+  "answer": "Mã hoá là một phần quan trọng trong việc xử lý các quyền lợi và thuật ngữ trong ngôn ngữ programming. Mã hoá thường được thiết kế để tránh các vấn đề như:\n\n1. **Khả năng lập trình:** Mã hoá giúp bạn tránh mất thời gian lặp lại và phát triển code. Băm chỉ là một phần của mã hoá.\n\n2. **Thuật ngữ và hiệu quả:** Mã hoá giúp bạn cung cấp một thuật ngữ đơn giản và hiệu quả",
   "input_tokens": 117,
   "generated_tokens": 160,
-  "elapsed_seconds": 11.567,
-  "peak_vram_mib": 1378.53
+  "elapsed_seconds": 4.241,
+  "peak_vram_mib": 1372.6
 }

@@ -1,0 +1,14 @@
+evaluation:
+  dataset_path: data/evaluation/vietnamese-pilot-v1.jsonl
+  output_dir: results/evaluation/baseline
+  variant_name: "variant_a_base_olmo2_1b"
+  generation:
+    max_new_tokens: 256
+    do_sample: false
+    repetition_penalty: 1.05
+    use_cache: true
+  quantization:
+    load_in_4bit: true
+    quant_type: nf4
+    double_quantization: true
+    compute_dtype: bfloat16

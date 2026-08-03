@@ -66,7 +66,14 @@ cd Viemmo-1B
 
 python -m venv .venv
 
-bash install.sh
+# If you use Linux and Mac run this
+source .venv/bin/activate
+
+# If you use Windows run this
+.venv/Scripts/activate
+
+# Then install all dependencies in requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Current status
