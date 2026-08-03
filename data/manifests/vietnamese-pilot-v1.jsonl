@@ -1,0 +1,17 @@
+{
+  "dataset_name": "vietnamese-pilot-v1.jsonl",
+  "file_path": "data/evaluation/vietnamese-pilot-v1.jsonl",
+  "sha256": "072f02145fa951d7ee5ae41e058ad6953e16427239f1be5733ad4272e8587f29",
+  "num_prompts": 30,
+  "categories": {
+    "vietnamese_grammar_language": 5,
+    "technical_accuracy": 5,
+    "summarization": 5,
+    "instruction_following": 5,
+    "uncertainty_hallucination": 5,
+    "privacy_security": 5
+  },
+  "unicode_normalization": "NFC",
+  "status": "FROZEN",
+  "frozen_at": "2026-08-03T09:37:00+07:00"
+}

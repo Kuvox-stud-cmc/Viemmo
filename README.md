@@ -58,6 +58,24 @@ These minimum specifications are suitable for:
 
 They are not suitable for full-parameter model training or large-model fine-tuning.
 
+## Get started
+```bash
+git clone https://github.com/Kuvox-stud-cmc/Viemmo-1B.git
+
+cd Viemmo-1B
+
+python -m venv .venv
+
+# If you use Linux and Mac run this
+source .venv/bin/activate
+
+# If you use Windows run this
+.venv/Scripts/activate
+
+# Then install all dependencies in requirements.txt
+pip install -r requirements.txt
+```
+
 ## Current status
 
 ### Completed
