@@ -218,7 +218,7 @@ Viemmo/Viemmo-1B-storage/
 ├── gguf/
 └── cache/
 ```
-
+Dowload the model `Viemmo-1B-datasets.rar` from One Drive if you are a part of the research team, then change the name to `datasets` and replace the datasets with it.
 The upstream checkpoint is treated as immutable.
 
 Git stores only:
