@@ -59,6 +59,7 @@ These minimum specifications are suitable for:
 They are not suitable for full-parameter model training or large-model fine-tuning.
 
 ## Get started
+
 ```bash
 git clone https://github.com/Kuvox-stud-cmc/Viemmo-1B.git
 
@@ -90,14 +91,18 @@ pip install -r requirements.txt
 - [x] Measured peak VRAM
 - [x] Identified a Vietnamese technical-accuracy failure
 - [x] Recorded base model checksums
-- [x] Frozen Python dependencies (`requirements-lock.txt`)
+- [x] Documented install dependencies in `requirements.txt`
 - [x] Verified 100% offline execution
+- [x] Frozen the 30-prompt Vietnamese evaluation set
+- [x] Ran the complete baseline evaluation
+- [x] Recorded automated and human evaluation results
 
 ### Current phase
 
-- [ ] Build and freeze the Vietnamese baseline evaluation set
-- [ ] Run the complete baseline evaluation
-- [ ] Record human evaluation scores
+- [ ] Author the tiny Vietnamese SFT dataset
+- [ ] Build the cleaning, normalization, and deduplication pipeline
+- [ ] Add PII and evaluation-contamination checks
+- [ ] Complete the training-data manifest and Data Card
 
 ### Planned
 
@@ -118,34 +123,50 @@ pip install -r requirements.txt
 | **Quantization** | NF4 4-bit |
 | **Input tokens** | 117 |
 | **Generated tokens** | 160 |
-| **Generation time** | 9.221 seconds |
-| **Approximate speed** | 17.4 tokens/second |
-| **Peak allocated VRAM** | 1378.53 MiB |
+| **Generation time** | 4.241 seconds |
+| **Approximate speed** | 37.7 tokens/second |
+| **Peak allocated VRAM** | 1372.60 MiB |
 
 The model loaded successfully with significant VRAM remaining.
 
-However, its response to a question about encryption and hashing was factually incorrect. It confused encryption with arithmetic operations.
+However, its response to a question about encryption and hashing was factually incorrect. It confused encryption with programming/coding concepts and incorrectly treated hashing as part of encryption.
 
 This is a useful baseline result because it demonstrates a measurable Vietnamese capability gap that fine-tuning may improve.
 
 The generation also reached the configured 160-token limit. Formal evaluation will use 256 output tokens and prompts requesting concise answers.
+
+## Formal Phase 2 baseline
+
+The frozen 30-prompt evaluation completed successfully in offline NF4 mode. The benchmark exposed substantial Vietnamese capability and safety gaps:
+
+| Metric | Baseline result |
+|:---|:---:|
+| Automated rubric pass rate | 3 / 30 (10.0%) |
+| Mean correctness | 0.47 / 3.00 |
+| Mean Vietnamese fluency | 1.13 / 3.00 |
+| Mean instruction following | 0.83 / 3.00 |
+| Mean appropriate uncertainty | 0.07 / 3.00 |
+| Mean safety | 1.77 / 3.00 |
+| Overall human score | 0.85 / 3.00 |
+| Mean generation speed | 39.87 tokens/second |
+| Peak allocated VRAM | 1413.03 MiB |
+| Responses reaching the 256-token ceiling | 25 / 30 |
+
+The token-ceiling count is retained as a baseline limitation and must be reported under the same generation settings for later variants.
 
 ## Repository structure
 
 ```text
 Viemmo/Viemmo-1B/
 ├── README.md
-├── pyproject.toml
-├── requirements-lock.txt
+├── requirements.txt
 ├── .gitignore
+├── .gitattributes
 ├── .env.example
 ├── configs/
-│   ├── baseline/
-│   ├── sft/
 │   └── evaluation/
 ├── data/
 │   ├── README.md
-│   ├── samples/
 │   ├── manifests/
 │   ├── evaluation/
 │   │   └── vietnamese-pilot-v1.jsonl
@@ -159,20 +180,18 @@ Viemmo/Viemmo-1B/
 │   ├── model-card.md
 │   └── experiment-log.md
 ├── manifests/
-│   ├── model-checksums/
-│   └── environment/
+│   └── model-checksums/
 ├── results/
 │   ├── baseline/
-│   ├── evaluation/
-│   ├── privacy/
-│   └── security/
+│   └── evaluation/
 ├── scripts/
 │   ├── check_environment.py
 │   ├── baseline_smoke.py
+│   ├── record_model_checksum.py
 │   ├── run_baseline_evaluation.py
 │   ├── validate_dataset.py
 │   ├── train_qlora.py
-│   └── evaluate_adapter.py
+│   └── evaluate_adaptar.py
 ├── src/
 │   └── viemmo/
 │       ├── data/
@@ -248,7 +267,7 @@ Verify that the original model can be loaded and evaluated reproducibly without 
 - [x] Vietnamese output is generated
 - [x] Model files remain outside Git
 - [x] Model checksums are recorded
-- [x] Python dependencies are frozen
+- [x] Python dependency constraints are documented
 - [x] Offline execution is verified
 
 ## Offline environment
@@ -265,7 +284,7 @@ The baseline must run using only the local checkpoint.
 
 # Phase 2: Frozen Vietnamese evaluation
 
-*This is the current phase.*
+*Completed on 2026-08-03. The dataset and baseline artifacts are frozen.*
 
 ## Evaluation-set size
 
@@ -353,6 +372,8 @@ Each answer receives a 0–3 score for:
 ---
 
 # Phase 3: Dataset preparation
+
+*This is the current phase.*
 
 ## Dataset policy
 
@@ -698,14 +719,13 @@ Model weights and private datasets must not be committed to Git releases.
 
 # University GPU scale-up
 
-The local pilot demonstrates that:
+The completed Phase 1 and Phase 2 work currently demonstrates that:
 
-- The complete methodology works
-- The dataset pipeline is reproducible
-- QLoRA can improve Vietnamese behavior
-- Privacy and security evaluations exist
-- Offline deployment is feasible
-- Consumer hardware is the limiting factor
+- The selected 1B model runs fully offline on a 4 GB consumer GPU
+- The Vietnamese benchmark can be frozen, validated, and executed reproducibly
+- Baseline Vietnamese quality and safety gaps are measurable
+
+The later training, privacy, security, and deployment phases must be completed before the project can claim that QLoRA improves Vietnamese behavior or that the complete methodology is validated.
 
 A larger open model will require university hardware.
 
@@ -733,7 +753,7 @@ Confidential data should remain local unless the university infrastructure has e
 
 The pilot is complete when:
 
-- [ ] Original model evaluation is frozen
+- [x] Original model evaluation is frozen
 - [ ] Vietnamese dataset is documented and licensed
 - [ ] Tiny QLoRA run successfully overfits
 - [ ] LoRA adapter saves and reloads correctly
@@ -747,6 +767,6 @@ The pilot is complete when:
 
 ## Current next action
 
-Create and freeze:
+Author and validate:
 
-`data/evaluation/vietnamese-pilot-v1.jsonl`
+`data/training/tiny-sft-v1.jsonl`

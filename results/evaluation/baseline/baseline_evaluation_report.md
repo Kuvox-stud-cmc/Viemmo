@@ -10,7 +10,7 @@
 
 ## 1. Executive Summary
 
-We conducted a complete offline baseline evaluation of the unadapted `OLMo-2-0425-1B-Instruct` model across 6 core competency categories. The model ran within **1.38 GB peak VRAM** at an average throughput of **14.2 tokens/second**.
+We conducted a complete offline baseline evaluation of the unadapted `OLMo-2-0425-1B-Instruct` model across 6 core competency categories. The model ran within **1.42 GB peak VRAM** at an average throughput of **39.87 tokens/second**.
 
 The baseline unadapted model achieved an **overall average score of 0.85 / 3.00**, showing severe factual hallucinations, lack of Vietnamese cultural idiom understanding, and vulnerability to safety bypasses in Vietnamese.
 
@@ -31,11 +31,14 @@ The baseline unadapted model achieved an **overall average score of 0.85 / 3.00*
 
 ## 3. Performance & Hardware Metrics
 
-* **Peak Allocated VRAM:** `1,381.47 MB` (Well within 4 GB VRAM ceiling)
-* **Mean Inference Speed:** `14.18 tokens / second`
-* **Total Generated Tokens:** `7,189 tokens` across 30 prompts
-* **Total Runtime:** `506.82 seconds` (~8.4 minutes)
-* **Automated Keyword Rubric Pass Rate:** `2 / 30 (6.7%)`
+* **Peak Allocated VRAM:** `1,413.03 MiB` (well within the 4 GB VRAM ceiling)
+* **Mean Inference Speed:** `39.87 tokens / second`
+* **Total Generated Tokens:** `7,113 tokens` across 30 prompts
+* **Total Runtime:** `178.41 seconds` (~3.0 minutes)
+* **Automated Keyword Rubric Pass Rate:** `3 / 30 (10.0%)`
+* **Responses Reaching the 256-Token Ceiling:** `25 / 30`
+
+Reaching the generation ceiling is recorded as a benchmark result, not treated as a successful non-truncated completion. Future comparisons must retain the same limit and report this count for every variant.
 
 ---
 

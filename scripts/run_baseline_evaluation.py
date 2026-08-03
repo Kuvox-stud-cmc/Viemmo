@@ -7,11 +7,13 @@ OLMo 2 1B base model using 4-bit NF4 quantization and bfloat16 compute.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import sys
 import time
 from pathlib import Path
+from typing import Any
 
 import yaml
 from dotenv import load_dotenv
@@ -31,7 +33,16 @@ if sys.platform == "win32":
         pass
 
 
-def evaluate_rubric(response_text: str, rubric: dict) -> dict[str, any]:
+def canonical_sha256(file_path: Path) -> str:
+    canonical_bytes = (
+        file_path.read_bytes()
+        .replace(b"\r\n", b"\n")
+        .replace(b"\r", b"\n")
+    )
+    return hashlib.sha256(canonical_bytes).hexdigest()
+
+
+def evaluate_rubric(response_text: str, rubric: dict) -> dict[str, Any]:
     """Automated check of keyword rubrics."""
     resp_lower = response_text.lower()
     must_include = rubric.get("must_include", [])
@@ -77,7 +88,25 @@ def main() -> None:
 
     gen_cfg = cfg.get("generation", {})
     max_new_tokens = gen_cfg.get("max_new_tokens", 256)
+    do_sample = gen_cfg.get("do_sample", False)
     repetition_penalty = gen_cfg.get("repetition_penalty", 1.05)
+    use_cache = gen_cfg.get("use_cache", True)
+
+    if do_sample:
+        raise ValueError("Baseline evaluation must use deterministic generation (do_sample=false).")
+
+    quant_cfg = cfg.get("quantization", {})
+    compute_dtype_name = quant_cfg.get("compute_dtype", "bfloat16")
+    compute_dtypes = {
+        "bfloat16": torch.bfloat16,
+        "float16": torch.float16,
+    }
+    if compute_dtype_name not in compute_dtypes:
+        raise ValueError(
+            "quantization.compute_dtype must be 'bfloat16' or 'float16'; "
+            f"received {compute_dtype_name!r}"
+        )
+    compute_dtype = compute_dtypes[compute_dtype_name]
 
     model_path_str = os.environ.get("MODEL_PATH", "")
     if len(model_path_str) >= 3 and model_path_str[0] == "/" and model_path_str[2] == "/":
@@ -97,10 +126,10 @@ def main() -> None:
     print(f"   Evaluation benchmark: {dataset_path}")
 
     quantization_config = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_quant_type="nf4",
-        bnb_4bit_use_double_quant=True,
-        bnb_4bit_compute_dtype=torch.bfloat16,
+        load_in_4bit=quant_cfg.get("load_in_4bit", True),
+        bnb_4bit_quant_type=quant_cfg.get("quant_type", "nf4"),
+        bnb_4bit_use_double_quant=quant_cfg.get("double_quantization", True),
+        bnb_4bit_compute_dtype=compute_dtype,
     )
 
     tokenizer = AutoTokenizer.from_pretrained(
@@ -115,7 +144,7 @@ def main() -> None:
         trust_remote_code=False,
         quantization_config=quantization_config,
         device_map={"": 0},
-        dtype=torch.bfloat16,
+        dtype=compute_dtype,
         attn_implementation="eager",
     )
     model.eval()
@@ -128,11 +157,16 @@ def main() -> None:
             if line_str:
                 prompts.append(json.loads(line_str))
 
+    if not prompts:
+        raise RuntimeError(f"Evaluation dataset contains no prompts: {dataset_path}")
+
     print(f"\n⚡ Loaded {len(prompts)} evaluation prompts. Beginning batch evaluation...\n" + "=" * 60)
 
     results = []
     total_generated_tokens = 0
     total_elapsed_time = 0.0
+    max_peak_vram_mib = 0.0
+    max_token_limit_hits = 0
 
     raw_output_file = output_dir / "raw_completions.jsonl"
     with raw_output_file.open("w", encoding="utf-8") as out_f:
@@ -159,8 +193,9 @@ def main() -> None:
                 output_tokens = model.generate(
                     **inputs,
                     max_new_tokens=max_new_tokens,
-                    do_sample=False,
+                    do_sample=do_sample,
                     repetition_penalty=repetition_penalty,
+                    use_cache=use_cache,
                     eos_token_id=tokenizer.eos_token_id,
                     pad_token_id=tokenizer.pad_token_id,
                 )
@@ -176,6 +211,9 @@ def main() -> None:
 
             total_generated_tokens += gen_count
             total_elapsed_time += t_elapsed
+            max_peak_vram_mib = max(max_peak_vram_mib, peak_vram)
+            hit_max_new_tokens = gen_count >= max_new_tokens
+            max_token_limit_hits += int(hit_max_new_tokens)
 
             rubric_eval = evaluate_rubric(answer, rubric)
 
@@ -190,6 +228,7 @@ def main() -> None:
                 "elapsed_seconds": round(t_elapsed, 3),
                 "tokens_per_second": round(tokens_per_sec, 2),
                 "peak_vram_mib": round(peak_vram, 2),
+                "hit_max_new_tokens": hit_max_new_tokens,
                 "rubric_evaluation": rubric_eval,
             }
 
@@ -214,12 +253,15 @@ def main() -> None:
         "variant": "Variant A (Base OLMo 2 1B Instruct)",
         "quantization": "NF4 4-bit with bfloat16 compute",
         "benchmark_file": str(dataset_path),
+        "benchmark_sha256_canonical_lf": canonical_sha256(dataset_path),
         "total_prompts": len(prompts),
+        "max_new_tokens": max_new_tokens,
+        "max_token_limit_hits": max_token_limit_hits,
         "total_generated_tokens": total_generated_tokens,
         "total_elapsed_seconds": round(total_elapsed_time, 2),
         "mean_tokens_per_second": round(avg_speed, 2),
         "automated_rubric_pass_rate": f"{passed_rubrics}/{len(prompts)} ({passed_rubrics/len(prompts)*100:.1f}%)",
-        "peak_vram_mib": round(torch.cuda.max_memory_allocated() / (1024**2), 2),
+        "peak_vram_mib": round(max_peak_vram_mib, 2),
     }
 
     summary_file = output_dir / "summary_report.json"
