@@ -1,0 +1,30 @@
+model:
+  id: allenai/OLMo-2-0425-1B-Instruct
+  revision: 48d788eca847d4d7548f375ad03d3c9312f6139e
+
+quantization:
+  load_in_4bit: true
+  quant_type: nf4
+  double_quantization: true
+  compute_dtype: float16
+
+lora:
+  rank: 8
+  alpha: 16
+  dropout: 0.05
+  target_modules:
+    - q_proj
+    - v_proj
+
+training:
+  sequence_length: 512
+  micro_batch_size: 1
+  gradient_accumulation_steps: 16
+  gradient_checkpointing: true
+  learning_rate: 0.0001
+  warmup_ratio: 0.03
+  scheduler: cosine
+  optimizer: paged_adamw_8bit
+  precision: fp16
+  num_train_epochs: 10
+  logging_steps: 1

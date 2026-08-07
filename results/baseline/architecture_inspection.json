@@ -1,0 +1,37 @@
+{
+  "model_id": "allenai/OLMo-2-0425-1B-Instruct",
+  "revision": "48d788eca847d4d7548f375ad03d3c9312f6139e",
+  "architecture": "Olmo2ForCausalLM",
+  "all_linear_suffixes": [
+    "down_proj",
+    "gate_proj",
+    "k_proj",
+    "lm_head",
+    "o_proj",
+    "q_proj",
+    "up_proj",
+    "v_proj"
+  ],
+  "attention_projections_confirmed": [
+    "q_proj",
+    "k_proj",
+    "v_proj",
+    "o_proj"
+  ],
+  "selected_target_modules": [
+    "q_proj",
+    "v_proj"
+  ],
+  "total_parameters": 1485965312,
+  "trainable_parameters": 1048576,
+  "trainable_ratio_percent": 0.0706,
+  "lora_config": {
+    "r": 8,
+    "lora_alpha": 16,
+    "lora_dropout": 0.05,
+    "target_modules": [
+      "q_proj",
+      "v_proj"
+    ]
+  }
+}
