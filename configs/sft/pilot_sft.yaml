@@ -1,0 +1,54 @@
+# ==============================================================================
+# Viemmo-1B: Phase 5 Pilot QLoRA Fine-Tuning Configuration
+# ==============================================================================
+# Target Hardware: Consumer 4 GB VRAM GPUs (NVIDIA GTX 1650 Ti / Turing / Ampere)
+# Dataset Size: 500 – 2,000 reviewed Vietnamese SFT instruction examples
+#
+# Memory Assumptions & Technical Constraints:
+#  - Base Model (NF4 4-bit + Double Quant): ~1.38 GB VRAM
+#  - LoRA Adapter Weights (r=8, q_proj & v_proj): ~0.01 GB VRAM (1.05M params)
+#  - Paged 8-bit AdamW Optimizer States: ~0.02 GB VRAM
+#  - Gradient Checkpointing Activations (seq_len 512): ~1.20 GB VRAM
+#  - Peak Allocated VRAM: ~2.6 – 2.8 GB VRAM (well within 4.0 GB limit)
+#
+# Effective Batch Size Calculation:
+#  - micro_batch_size per device = 1
+#  - gradient_accumulation_steps = 16
+#  - Effective Batch Size = 1 * 16 = 16 sequences per optimization step
+# ==============================================================================
+
+model:
+  id: allenai/OLMo-2-0425-1B-Instruct
+  revision: 48d788eca847d4d7548f375ad03d3c9312f6139e
+
+quantization:
+  load_in_4bit: true
+  quant_type: nf4
+  double_quantization: true
+  compute_dtype: float16
+
+lora:
+  rank: 8
+  alpha: 16
+  dropout: 0.05
+  target_modules:
+    - q_proj
+    - v_proj
+
+training:
+  sequence_length: 512
+  micro_batch_size: 1
+  gradient_accumulation_steps: 16
+  gradient_checkpointing: true
+  learning_rate: 0.0001
+  warmup_ratio: 0.03
+  scheduler: cosine
+  optimizer: paged_adamw_8bit
+  precision: float16
+  num_train_epochs: 1
+  logging_steps: 10
+  eval_steps: 50
+  save_steps: 100
+  save_total_limit: 3
+  early_stopping_patience: 3
+  seed: 42

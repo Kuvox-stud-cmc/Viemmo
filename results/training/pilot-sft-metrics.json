@@ -1,0 +1,19 @@
+{
+  "model_id": "allenai/OLMo-2-0425-1B-Instruct",
+  "seed": 42,
+  "total_training_time_sec": 1475.18,
+  "average_step_latency_sec": 18.4,
+  "peak_vram_mb": 2812.56,
+  "pre_training_accuracy_percent": 53.28,
+  "post_training_accuracy_percent": 99.96,
+  "final_train_loss": 0.6417397235985846,
+  "best_model_checkpoint": null,
+  "best_metric": null,
+  "loss_curve_image": "results\\training\\loss_curve.svg",
+  "environment": {
+    "python_version": "3.11.15",
+    "pytorch_version": "2.5.1+cu121",
+    "cuda_version": "12.1",
+    "gpu_name": "NVIDIA GeForce GTX 1650 Ti"
+  }
+}
