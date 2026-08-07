@@ -534,7 +534,7 @@ More epochs do not automatically improve the model. Excessive training may incre
 
 # Phase 6: Model comparison
 
-Compare:
+Compare the core model variants on the frozen Vietnamese evaluation set:
 
 | Variant | Description |
 |:---:|:---|
@@ -542,7 +542,6 @@ Compare:
 | **B** | OLMo + tiny LoRA |
 | **C** | OLMo + pilot Vietnamese LoRA |
 | **D** | Quantized adapted OLMo |
-| **E** | Adapted OLMo with local RAG |
 
 All variants use the same frozen evaluation set.
 
