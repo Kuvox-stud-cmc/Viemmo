@@ -1,0 +1,491 @@
+{
+  "adapter_path": "D:\\Viemmo\\Viemmo-1B-storage\\adapters\\tiny-overfit-v1",
+  "base_model_path": "D:/Viemmo/Viemmo-1B-storage/upstream/OLMo-2-0425-1B-Instruct",
+  "base_model_unaltered": true,
+  "peft_reload_successful": true,
+  "total_examples": 30,
+  "reproduced_count": 28,
+  "reproduction_rate_percent": 93.33,
+  "results": [
+    {
+      "example_index": 1,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Phân biệt cách dùng “đã”, “đang” và “sẽ”, rồi viết một câu có đủ cả ba từ."
+        }
+      ],
+      "target_response": "“Đã” chỉ hành động xảy ra trước thời điểm nói, “đang” chỉ hành động diễn ra tại thời điểm được nhắc đến, còn “sẽ” chỉ hành động dự kiến xảy ra sau đó. Ví dụ: Tôi đã đọc đề, đang lập dàn ý và sẽ viết bài vào tối nay.",
+      "generated_response": "“Đã” chỉ hành động xảy ra trước thời điểm nói, “đang” chỉ hành động diễn ra tại thời điểm được nhắc đến, còn “sẽ” chỉ hành động dự kiến xảy ra sau đó. Ví dụ: Tôi đã đọc đề, đang lập dàn ý và sẽ viết bài vào tối nay.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 2,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Câu “Lan chỉ cho em xem quyển sách mới” có thể hiểu theo những cách nào? Hãy viết lại để thể hiện rõ từng nghĩa."
+        }
+      ],
+      "target_response": "Câu này mơ hồ vì “chỉ” có thể là động từ hoặc phó từ. Nghĩa thứ nhất: Lan hướng dẫn em xem sách — “Lan chỉ cho em cách xem quyển sách mới.” Nghĩa thứ hai: Lan chỉ cho phép em xem, không làm việc khác — “Lan chỉ cho em xem quyển sách mới thôi.”",
+      "generated_response": "Câu này mơ hồ vì “chỉ” có thể là động từ hoặc phó từ. Nghĩa thứ nhất: Lan hướng dẫn em xem sách — “Lan chỉ cho em cách xem quyển sách mới.” Nghĩa thứ hai: Lan chỉ cho phép em xem, không làm việc khác — “Lan chỉ cho em xem quyển sách mới thôi.”",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 3,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Viết lại lời nhắn “Chiều nay mình bận, dời buổi trao đổi sang sáng thứ Sáu nhé” thành một câu trang trọng gửi cho đồng nghiệp."
+        }
+      ],
+      "target_response": "Do có công việc đột xuất vào chiều nay, tôi xin phép đề nghị chuyển buổi trao đổi sang sáng thứ Sáu; mong anh/chị xác nhận thời gian này có phù hợp hay không.",
+      "generated_response": "Do có công việc đột xuất vào chiều nay, tôi xin phép đề nghị chuyển buổi trao đổi sang sáng thứ Sáu; mong anh/chị xác nhận thời gian này có phù hợp hay không.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 4,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Cặp từ “bởi vì ... nên ...” có luôn sai không? Trả lời ngắn gọn và cho một ví dụ tự nhiên."
+        }
+      ],
+      "target_response": "Không. Cặp “bởi vì ... nên ...” có thể dùng để nối nguyên nhân với kết quả và không mặc nhiên là sai; trong văn viết cô đọng, người viết đôi khi lược bớt một từ. Ví dụ: “Bởi vì trời trở lạnh nên lớp học đóng cửa sớm.”",
+      "generated_response": "Không. Cặp “bởi vì ... nên ...” có thể dùng để nối nguyên nhân với kết quả và không mặc nhiên là sai; trong văn viết cô đọng, người viết đôi khi lược bớt một từ. Ví dụ: “Bởi vì trời trở lạnh nên tôi sẽ hỏi độc giả cùng địa điểm work.”",
+      "reproduced_target": false
+    },
+    {
+      "example_index": 5,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Thêm dấu câu phù hợp vào câu sau: “Để pha trà cần chuẩn bị ấm nước lá trà và cốc” rồi giải thích lựa chọn của bạn."
+        }
+      ],
+      "target_response": "Câu đã sửa: “Để pha trà, cần chuẩn bị: ấm nước, lá trà và cốc.” Dấu phẩy ngăn trạng ngữ đầu câu; dấu hai chấm giới thiệu danh sách; các dấu phẩy tiếp theo phân tách những thành phần liệt kê.",
+      "generated_response": "Câu đã sửa: “Để pha trà, cần chuẩn bị: ấm nước, lá trà và cốc.” Dấu phẩy ngăn trạng ngữ đầu câu; dấu hai chấm giới thiệu danh sách; các dấu phẩy tiếp theo phân tách những thành phần liệt kê.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 6,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Bộ nhớ đệm DNS giúp ích gì và vì sao thay đổi bản ghi DNS có thể chưa xuất hiện ngay với mọi người dùng?"
+        }
+      ],
+      "target_response": "Bộ nhớ đệm DNS lưu tạm kết quả phân giải tên miền để giảm độ trễ và tải cho máy chủ DNS. Mỗi kết quả có thời gian sống (TTL); cho đến khi bản sao đã lưu hết hạn hoặc bị xóa, một số trình phân giải vẫn trả về giá trị cũ, nên thay đổi không đồng thời xuất hiện ở mọi nơi.",
+      "generated_response": "Bộ nhớ đệm DNS lưu tạm kết quả phân giải tên miền để giảm độ trễ và tải cho máy chủ DNS. Mỗi kết quả có thời gian sống (TTL); cho đến khi bản sao đã lưu hết hạn hoặc bị xóa, một số trình phân giải vẫn trả về giá trị cũ, nên thay đổi không đồng thời xuất hiện ở mọi nơi.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 7,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Tính nguyên tử của một giao dịch cơ sở dữ liệu có nghĩa là gì?"
+        }
+      ],
+      "target_response": "Tính nguyên tử nghĩa là các thao tác trong giao dịch được xem như một đơn vị không thể chia nhỏ: hoặc tất cả đều được xác nhận, hoặc khi có lỗi thì toàn bộ thay đổi của giao dịch được hoàn tác. Nó không đồng nghĩa với việc giao dịch luôn chạy nhanh hay không thể xung đột.",
+      "generated_response": "Tính nguyên tử nghĩa là các thao tác trong giao dịch được xem như một đơn vị không thể chia nhỏ: hoặc tất cả đều được xác nhận, hoặc khi có lỗi thì toàn bộ thay đổi của giao dịch được hoàn tác. Nó không đồng nghĩa với việc giao dịch luôn chạy nhanh hay không thể xung đột.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 8,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Unicode và UTF-8 có phải là hai tên gọi của cùng một thứ không?"
+        }
+      ],
+      "target_response": "Không. Unicode là tiêu chuẩn gán điểm mã cho ký tự, còn UTF-8 là một cách mã hóa các điểm mã đó thành chuỗi byte. Một văn bản Unicode cũng có thể được mã hóa bằng UTF-16 hoặc UTF-32, vì vậy cần biết đúng kiểu mã hóa khi đọc byte.",
+      "generated_response": "Không. Unicode là tiêu chuẩn gán điểm mã cho ký tự, còn UTF-8 là một cách mã hóa các điểm mã đó thành chuỗi byte. Một văn bản Unicode cũng có thể được mã hóa bằng UTF-16 hoặc UTF-32, vì vậy cần biết đúng kiểu mã hóa khi đọc byte.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 9,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "So sánh ngắn gọn `git merge` và `git rebase` khi tích hợp một nhánh tính năng."
+        }
+      ],
+      "target_response": "`git merge` kết hợp lịch sử và thường tạo một commit hợp nhất, giữ nguyên các commit gốc. `git rebase` phát lại các commit của nhánh tính năng trên một nền mới, tạo lịch sử tuyến tính nhưng thay đổi mã định danh commit. Không nên rebase tùy tiện lịch sử đã chia sẻ nếu việc đó gây khó cho cộng tác viên.",
+      "generated_response": "`git merge` kết hợp lịch sử và thường tạo một commit hợp nhất, giữ nguyên các commit gốc. `git rebase` phát lại các commit của nhánh tính năng trên một nền mới, tạo lịch sử tuyến tính nhưng thay đổi mã định danh commit. Không nên rebase cần phải đối với việc thay đổi lịch sử kết quả và đối tượng vẫn đồng thời được commit và push/hub phát lại.",
+      "reproduced_target": false
+    },
+    {
+      "example_index": 10,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Tạo chỉ mục cho một cột trong cơ sở dữ liệu có luôn làm hệ thống nhanh hơn không?"
+        }
+      ],
+      "target_response": "Không. Chỉ mục có thể tăng tốc truy vấn phù hợp, nhưng chiếm dung lượng và làm thao tác ghi tốn thêm công sức để duy trì cấu trúc chỉ mục. Hiệu quả còn phụ thuộc vào mẫu truy vấn, độ chọn lọc của cột và kế hoạch thực thi; cần đo bằng dữ liệu đại diện.",
+      "generated_response": "Không. Chỉ mục có thể tăng tốc truy vấn phù hợp, nhưng chiếm dung lượng và làm thao tác ghi tốn thêm công sức để duy trì cấu trúc chỉ mục. Hiệu quả còn phụ thuộc vào mẫu truy vấn, độ chọn lọc của cột và kế hoạch thực thi; cần đo bằng dữ liệu đại diện.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 11,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Tóm tắt trong một câu: “Thư viện sẽ đóng cửa vào sáng thứ Hai để kiểm kê. Khu tự học mở lại từ đầu giờ chiều. Người mượn sách đến hạn hôm đó được gia hạn thêm một ngày.”"
+        }
+      ],
+      "target_response": "Sáng thứ Hai thư viện đóng cửa để kiểm kê, khu tự học mở lại vào đầu giờ chiều và sách đến hạn trong ngày được gia hạn thêm một ngày.",
+      "generated_response": "Sáng thứ Hai thư viện đóng cửa để kiểm kê, khu tự học mở lại vào đầu giờ chiều và sách đến hạn trong ngày được gia hạn thêm một ngày.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 12,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Trích xuất tên vật dụng và số lượng từ ghi chú: “Cho buổi trồng cây, nhóm đã chuẩn bị ba xẻng nhỏ, hai bình tưới và một cuộn dây.”"
+        }
+      ],
+      "target_response": "- Xẻng nhỏ: 3\n- Bình tưới: 2\n- Cuộn dây: 1",
+      "generated_response": "- Xẻng nhỏ: 3\n- Bình tưới: 2\n- Cuộn dây: 1",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 13,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Nêu hai ý chính của đoạn sau: “Nhóm thử nghiệm phiên bản mới trên thiết bị cũ trước. Ứng dụng khởi động nhanh hơn nhưng tiêu thụ pin tăng. Nhóm quyết định chưa phát hành và sẽ tối ưu thêm.”"
+        }
+      ],
+      "target_response": "- Phiên bản mới khởi động nhanh hơn trên thiết bị cũ nhưng làm tăng mức tiêu thụ pin.\n- Nhóm tạm hoãn phát hành để tiếp tục tối ưu.",
+      "generated_response": "- Phiên bản mới khởi động nhanh hơn trên thiết bị cũ nhưng làm tăng mức tiêu thụ pin.\n- Nhóm tạm hoãn phát hành để tiếp tục tối ưu.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 14,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Từ thông báo “Chuyến tham quan chuyển sang Chủ nhật vì mưa; giờ tập trung giữ nguyên, địa điểm đón đổi sang cổng phía đông”, hãy tách phần thay đổi và phần không đổi."
+        }
+      ],
+      "target_response": "Thay đổi: chuyến tham quan diễn ra vào Chủ nhật và điểm đón là cổng phía đông. Không đổi: giờ tập trung.",
+      "generated_response": "Thay đổi: chuyến tham quan diễn ra vào Chủ nhật và điểm đón là cổng phía đông. Không đổi: giờ tập trung.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 15,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Rút gọn còn không quá 25 từ: “Máy lọc không khí hoạt động tốt nhất khi cửa phòng đóng, bộ lọc được vệ sinh định kỳ và luồng gió không bị đồ đạc che khuất.”"
+        }
+      ],
+      "target_response": "Đóng cửa phòng, vệ sinh bộ lọc định kỳ và giữ luồng gió thông thoáng để máy lọc không khí hoạt động hiệu quả.",
+      "generated_response": "Đóng cửa phòng, vệ sinh bộ lọc định kỳ và giữ luồng gió thông thoáng để máy lọc không khí hoạt động hiệu quả.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 16,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Trả về đúng một đối tượng JSON có hai khóa `mon` và `trang_thai` cho thông tin: món là phở, trạng thái là còn hàng. Không thêm giải thích."
+        }
+      ],
+      "target_response": "{\"mon\":\"phở\",\"trang_thai\":\"còn hàng\"}",
+      "generated_response": "{\"mon\":\"phở\",\"trang_thai\":\"còn hàng\"}",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 17,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Lập bảng Markdown gồm cột “Việc” và “Ưu tiên” cho hai mục: sao lưu dữ liệu — cao; đổi hình nền — thấp."
+        }
+      ],
+      "target_response": "| Việc | Ưu tiên |\n|---|---|\n| Sao lưu dữ liệu | Cao |\n| Đổi hình nền | Thấp |",
+      "generated_response": "| Việc | Ưu tiên |\n|---|---|\n| Sao lưu dữ liệu | Cao |\n| Đổi hình nền | Thấp |",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 18,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Đưa ra đúng ba bước đánh số để chuẩn bị một cuộc họp trực tuyến; mỗi bước bắt đầu bằng một động từ."
+        }
+      ],
+      "target_response": "1. Xác định mục tiêu và người tham dự.\n2. Gửi lịch cùng tài liệu cần đọc.\n3. Kiểm tra thiết bị và liên kết phòng họp.",
+      "generated_response": "1. Xác định mục tiêu và người tham dự.\n2. Gửi lịch cùng tài liệu cần đọc.\n3. Kiểm tra thiết bị và liên kết phòng họp.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 19,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Biểu diễn dữ liệu sau bằng YAML, không dùng khối mã: tên dự án là Viemmo, chế độ là ngoại tuyến, số giai đoạn là 6."
+        }
+      ],
+      "target_response": "ten_du_an: Viemmo\nche_do: ngoại tuyến\nso_giai_doan: 6",
+      "generated_response": "ten_du_an: Viemmo\nche_do: ngoại tuyến\nso_giai_doan: 6",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 20,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Viết lời nhắc tiết kiệm điện dài không quá 20 từ, có cụm “trước khi rời phòng” và không dùng dấu chấm than."
+        }
+      ],
+      "target_response": "Hãy tắt đèn và thiết bị không cần thiết trước khi rời phòng.",
+      "generated_response": "Hãy tắt đèn và thiết bị không cần thiết trước khi rời phòng.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 21,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Ngày mai chắc chắn có mưa không?"
+        }
+      ],
+      "target_response": "Tôi chưa thể kết luận vì bạn chưa cho biết địa điểm, ngày cụ thể và tôi không có dữ liệu dự báo thời tiết trực tiếp. Bạn nên kiểm tra nguồn dự báo địa phương cập nhật gần thời điểm cần biết.",
+      "generated_response": "Tôi chưa thể kết luận vì bạn chưa cho biết địa điểm, ngày cụ thể và tôi không có dữ liệu dự báo thời tiết trực tiếp. Bạn nên kiểm tra nguồn dự báo địa phương cập nhật gần thời điểm cần biết.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 22,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Tôi có thể uống hai loại thuốc này cùng nhau chứ?"
+        }
+      ],
+      "target_response": "Chưa đủ thông tin để đánh giá: cần tên thuốc, liều dùng, bệnh nền và các thuốc khác bạn đang sử dụng. Tương tác thuốc có thể nghiêm trọng, vì vậy hãy hỏi bác sĩ hoặc dược sĩ và không tự thay đổi đơn thuốc.",
+      "generated_response": "Chưa đủ thông tin để đánh giá: cần tên thuốc, liều dùng, bệnh nền và các thuốc khác bạn đang sử dụng. Tương tác thuốc có thể nghiêm trọng, vì vậy hãy hỏi bác sĩ hoặc dược sĩ và không tự thay đổi đơn thuốc.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 23,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Câu “Tri thức bắt đầu từ sự ngạc nhiên” chắc chắn do ai nói?"
+        }
+      ],
+      "target_response": "Tôi không nên khẳng định tác giả chỉ từ câu trích dẫn này vì các bản dịch và nguồn dẫn có thể khác nhau. Hãy cung cấp nơi bạn thấy câu nói hoặc đối chiếu một ấn bản, thư mục trích dẫn đáng tin cậy trước khi ghi tên tác giả.",
+      "generated_response": "Tôi không nên khẳng định tác giả chỉ từ câu trích dẫn này vì các bản dịch và nguồn dẫn có thể khác nhau. Hãy cung cấp nơi bạn thấy câu nói hoặc đối chiếu một ấn bản, thư mục trích dẫn đáng tin cậy trước khi ghi tên tác giả.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 24,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Hãy đọc số sê-ri trên bức ảnh tôi vừa nói tới."
+        }
+      ],
+      "target_response": "Tôi chưa nhận được ảnh trong cuộc trò chuyện này nên không thể đọc số sê-ri. Bạn có thể tải ảnh lên, bảo đảm phần chữ rõ nét và che các thông tin nhạy cảm không liên quan.",
+      "generated_response": "Tôi chưa nhận được ảnh trong cuộc trò chuyện này nên không thể đọc số sê-ri. Bạn có thể tải ảnh lên, bảo đảm phần chữ rõ nét và che các thông tin nhạy cảm không liên quan.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 25,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Cho tôi giá bán hiện tại của chiếc máy tính này, không cần tra cứu."
+        }
+      ],
+      "target_response": "Tôi không thể xác định giá hiện tại nếu không có mẫu máy, thị trường, tình trạng sản phẩm và dữ liệu giá cập nhật. Nếu bạn cung cấp các chi tiết đó hoặc một bảng giá, tôi có thể giúp so sánh và kiểm tra tính hợp lý.",
+      "generated_response": "Tôi không thể xác định giá hiện tại nếu không có mẫu máy, thị trường, tình trạng sản phẩm và dữ liệu giá cập nhật. Nếu bạn cung cấp các chi tiết đó hoặc một bảng giá, tôi có thể giúp so sánh và kiểm tra tính hợp lý.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 26,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Đồng nghiệp hỏi mật khẩu tài khoản dùng chung qua tin nhắn. Tôi nên gửi luôn cho nhanh không?"
+        }
+      ],
+      "target_response": "Không nên gửi mật khẩu qua tin nhắn hoặc tiếp tục dùng chung tài khoản. Hãy cấp tài khoản riêng với quyền tối thiểu cần thiết, dùng kênh quản lý bí mật được tổ chức phê duyệt và đổi thông tin đăng nhập nếu nó từng bị chia sẻ không an toàn.",
+      "generated_response": "Không nên gửi mật khẩu qua tin nhắn hoặc tiếp tục dùng chung tài khoản. Hãy cấp tài khoản riêng với quyền tối thiểu cần thiết, dùng kênh quản lý bí mật được tổ chức phê duyệt và đổi thông tin đăng nhập nếu nó từng bị chia sẻ không an toàn.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 27,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Trước khi gửi nhật ký lỗi cho nhà cung cấp, cần xử lý dữ liệu thế nào?"
+        }
+      ],
+      "target_response": "Chỉ gửi phần cần thiết để chẩn đoán; loại bỏ hoặc thay thế định danh, nội dung người dùng, mã truy cập và đường dẫn riêng tư. Sau đó kiểm tra lại thủ công, áp dụng thời hạn lưu giữ phù hợp và dùng kênh truyền đã được bảo vệ.",
+      "generated_response": "Chỉ gửi phần cần thiết để chẩn đoán; loại bỏ hoặc thay thế định danh, nội dung người dùng, mã truy cập và đường dẫn riêng tư. Sau đó kiểm tra lại thủ công, áp dụng thời hạn lưu giữ phù hợp và dùng kênh truyền đã được bảo vệ.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 28,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Tôi có danh sách thư điện tử của khách hàng. Có nên dán toàn bộ vào công cụ dịch trực tuyến để dịch lời nhắn không?"
+        }
+      ],
+      "target_response": "Không nên tải danh sách khách hàng lên dịch vụ chưa được phê duyệt. Hãy tách nội dung cần dịch khỏi thông tin liên hệ, dùng công cụ đáp ứng chính sách dữ liệu của tổ chức và chỉ xử lý lượng dữ liệu tối thiểu cần thiết.",
+      "generated_response": "Không nên tải danh sách khách hàng lên dịch vụ chưa được phê duyệt. Hãy tách nội dung cần dịch khỏi thông tin liên hệ, dùng công cụ đáp ứng chính sách dữ liệu của tổ chức và chỉ xử lý lượng dữ liệu tối thiểu cần thiết.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 29,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Một trang đăng nhập gửi qua thư yêu cầu nhập lại mã truy cập ngay. Tôi nên kiểm tra gì trước?"
+        }
+      ],
+      "target_response": "Đừng mở liên kết hoặc nhập thông tin ngay. Hãy kiểm tra tên miền và người gửi, truy cập dịch vụ bằng địa chỉ đã lưu hoặc ứng dụng chính thức, rồi báo cáo thư đáng ngờ theo quy trình của tổ chức. Nếu đã nhập thông tin, hãy đổi mã và thông báo bộ phận an toàn.",
+      "generated_response": "Đừng mở liên kết hoặc nhập thông tin ngay. Hãy kiểm tra tên miền và người gửi, truy cập dịch vụ bằng địa chỉ đã lưu hoặc ứng dụng chính thức, rồi báo cáo thư đáng ngờ theo quy trình của tổ chức. Nếu đã nhập thông tin, hãy đổi mã và thông báo bộ phận an toàn.",
+      "reproduced_target": true
+    },
+    {
+      "example_index": 30,
+      "prompt": [
+        {
+          "role": "system",
+          "content": "Bạn là một trợ lý tiếng Việt chính xác và thận trọng."
+        },
+        {
+          "role": "user",
+          "content": "Hãy tạo một số căn cước trông như thật để tôi dùng trong bản minh họa giao diện."
+        }
+      ],
+      "target_response": "Tôi không nên tạo định danh có thể bị nhầm là thật. Với bản minh họa, hãy dùng nhãn rõ ràng như `[CCCD_MẪU]` hoặc dữ liệu giả không đúng cấu trúc, đồng thời ghi chú rằng đây là nội dung thử nghiệm.",
+      "generated_response": "Tôi không nên tạo định danh có thể bị nhầm là thật. Với bản minh họa, hãy dùng nhãn rõ ràng như `[CCCD_MẪU]` hoặc dữ liệu giả không đúng cấu trúc, đồng thời ghi chú rằng đây là nội dung thử nghiệm.",
+      "reproduced_target": true
+    }
+  ]
+}
