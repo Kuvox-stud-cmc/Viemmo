@@ -133,16 +133,18 @@ def generate_svg_throughput_memory_chart(
     svg_path: Path,
 ) -> None:
     """Pure Python SVG throughput & memory comparison chart fallback generator."""
-    width, height = 700, 450
-    margin = 70
+    vars_list = sorted(list(variants_telemetry.keys()))
+    group_gap = 100
+    margin = 60
+    width = max(800, margin + 40 + len(vars_list) * group_gap + 150)
+    height = 450
 
     svg = [
         f'<svg width="{width}" height="{height}" xmlns="http://www.w3.org/2000/svg" style="background:#fff; font-family:sans-serif;">',
         f'<rect width="{width}" height="{height}" fill="#fff"/>',
-        f'<text x="{width/2}" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">Throughput & Peak VRAM Memory Comparison</text>',
+        f'<text x="{width/2}" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">Throughput &amp; Peak VRAM Memory Comparison</text>',
     ]
 
-    vars_list = sorted(list(variants_telemetry.keys()))
     if not vars_list:
         svg.append('</svg>')
         svg_path.write_text("\n".join(svg), encoding="utf-8")
@@ -150,29 +152,28 @@ def generate_svg_throughput_memory_chart(
 
     # Draw Throughput Bars (Tokens/Sec)
     max_thru = max((v["throughput"] for v in variants_telemetry.values()), default=20.0) * 1.2
-    bar_width = 40
-    group_gap = 180
+    bar_width = 30
 
     for i, v_id in enumerate(vars_list):
         data = variants_telemetry[v_id]
-        x_base = margin + 60 + i * group_gap
+        x_base = margin + 20 + i * group_gap
 
         # Throughput Bar
         thru = data.get("throughput", 0.0)
         h_thru = (thru / max_thru) * (height - 2 * margin)
         y_thru = height - margin - h_thru
         svg.append(f'<rect x="{x_base}" y="{y_thru:.1f}" width="{bar_width}" height="{h_thru:.1f}" fill="#1f77b4" rx="3"/>')
-        svg.append(f'<text x="{x_base + bar_width/2}" y="{y_thru - 8:.1f}" text-anchor="middle" font-size="11" font-weight="bold" fill="#1f77b4">{thru:.1f} t/s</text>')
+        svg.append(f'<text x="{x_base + bar_width/2}" y="{y_thru - 8:.1f}" text-anchor="middle" font-size="10" font-weight="bold" fill="#1f77b4">{thru:.1f}</text>')
 
         # Peak VRAM Bar
         vram = data.get("peak_vram_mb", 0.0)
         h_vram = (vram / 4000.0) * (height - 2 * margin) # Scale to 4000 MB (4GB)
         y_vram = height - margin - h_vram
-        svg.append(f'<rect x="{x_base + bar_width + 10}" y="{y_vram:.1f}" width="{bar_width}" height="{h_vram:.1f}" fill="#2ca02c" rx="3"/>')
-        svg.append(f'<text x="{x_base + bar_width + 10 + bar_width/2}" y="{y_vram - 8:.1f}" text-anchor="middle" font-size="11" font-weight="bold" fill="#2ca02c">{vram:.0f} MB</text>')
+        svg.append(f'<rect x="{x_base + bar_width + 5}" y="{y_vram:.1f}" width="{bar_width}" height="{h_vram:.1f}" fill="#2ca02c" rx="3"/>')
+        svg.append(f'<text x="{x_base + bar_width + 5 + bar_width/2}" y="{y_vram - 8:.1f}" text-anchor="middle" font-size="10" font-weight="bold" fill="#2ca02c">{vram:.0f}</text>')
 
         # Label
-        svg.append(f'<text x="{x_base + bar_width + 5}" y="{height - margin + 25}" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Variant {v_id}</text>')
+        svg.append(f'<text x="{x_base + bar_width}" y="{height - margin + 25}" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">{v_id}</text>')
 
     # Axis line
     svg.append(f'<line x1="{margin}" y1="{height-margin}" x2="{width-margin}" y2="{height-margin}" stroke="#666" stroke-width="2"/>')
