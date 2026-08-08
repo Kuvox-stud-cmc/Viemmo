@@ -71,28 +71,44 @@ def generate_svg_radar_chart(
     variant_scores: Dict[str, List[float]],
     svg_path: Path,
 ) -> None:
-    """Pure Python SVG radar chart fallback generator."""
-    width, height = 600, 600
-    cx, cy, r = 300, 300, 200
+    """Pure Python SVG radar chart generator with clean side legend and crisp outline rendering."""
+    width, height = 920, 620
+    cx, cy, r = 300, 310, 200
     num_cats = len(categories)
 
     if num_cats == 0:
         return
 
+    variant_names = {
+        "A": "Var A (OLMo 1B Base)",
+        "B": "Var B (OLMo 1B Overfit)",
+        "C": "Var C (OLMo 1B SFT)",
+        "D": "Var D (OLMo 1B GGUF)",
+        "E": "Var E (Qwen 1.5B Base)",
+        "F": "Var F (Qwen 1.5B SFT)",
+        "G": "Var G (Qwen 14B Base)",
+        "H": "Var H (Qwen 14B SFT)",
+        "I": "Var I (Qwen 32B Base)",
+        "J": "Var J (Qwen 32B SFT)",
+    }
+
+    colors = {
+        "A": "#1f77b4", "B": "#ff7f0e", "C": "#2ca02c", "D": "#d62728",
+        "E": "#9467bd", "F": "#8c564b", "G": "#e377c2", "H": "#17becf",
+        "I": "#bcbd22", "J": "#00a86b",
+    }
+
     svg = [
         f'<svg width="{width}" height="{height}" xmlns="http://www.w3.org/2000/svg" style="background:#fff; font-family:sans-serif;">',
         f'<rect width="{width}" height="{height}" fill="#fff"/>',
-        f'<text x="{cx}" y="40" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">Variant Capability Radar Comparison</text>',
+        f'<text x="{width/2}" y="35" text-anchor="middle" font-size="18" font-weight="bold" fill="#222">Variant Capability Radar Comparison (1-3 Scale)</text>',
     ]
 
     # Concentric circles (0 to 3 score grid)
-    colors = {"A": "#1f77b4", "B": "#2ca02c", "C": "#ff7f0e", "D": "#d62728",
-              "E": "#9467bd", "F": "#8c564b", "G": "#e377c2", "H": "#7f7f7f",
-              "I": "#bcbd22", "J": "#17becf"}
     for step in range(1, 4):
         radius = r * (step / 3.0)
         svg.append(f'<circle cx="{cx}" cy="{cy}" r="{radius:.1f}" fill="none" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4,4"/>')
-        svg.append(f'<text x="{cx+5}" y="{cy-radius+12}" font-size="10" fill="#888">{step}.0</text>')
+        svg.append(f'<text x="{cx+5}" y="{cy-radius+12}" font-size="10" font-weight="bold" fill="#888">{step}.0</text>')
 
     # Category Axes
     angles = [i * (2 * math.pi / num_cats) - (math.pi / 2) for i in range(num_cats)]
@@ -101,12 +117,14 @@ def generate_svg_radar_chart(
         ay = cy + r * math.sin(angle)
         svg.append(f'<line x1="{cx}" y1="{cy}" x2="{ax:.1f}" y2="{ay:.1f}" stroke="#ccc" stroke-width="1.5"/>')
 
-        lx = cx + (r + 30) * math.cos(angle)
-        ly = cy + (r + 30) * math.sin(angle)
-        svg.append(f'<text x="{lx:.1f}" y="{ly:.1f}" text-anchor="middle" font-size="12" font-weight="bold" fill="#444">{categories[i]}</text>')
+        lx = cx + (r + 35) * math.cos(angle)
+        ly = cy + (r + 35) * math.sin(angle)
+        svg.append(f'<text x="{lx:.1f}" y="{ly:.1f}" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">{categories[i]}</text>')
 
-    # Plot Variants
-    for var_id, scores in variant_scores.items():
+    # Plot Variants (Crisp outlines with minimal fill-opacity to avoid dark muddy blur)
+    sorted_vars = sorted(list(variant_scores.keys()))
+    for var_id in sorted_vars:
+        scores = variant_scores[var_id]
         if len(scores) != num_cats:
             continue
         color = colors.get(var_id, "#888888")
@@ -118,10 +136,25 @@ def generate_svg_radar_chart(
             points.append(f"{px:.1f},{py:.1f}")
 
         poly_pts = " ".join(points)
-        svg.append(f'<polygon points="{poly_pts}" fill="{color}" fill-opacity="0.2" stroke="{color}" stroke-width="2.5"/>')
+        svg.append(f'<polygon points="{poly_pts}" fill="{color}" fill-opacity="0.03" stroke="{color}" stroke-width="2.5"/>')
         for pt in points:
             px, py = pt.split(",")
-            svg.append(f'<circle cx="{px}" cy="{py}" r="4" fill="{color}"/>')
+            svg.append(f'<circle cx="{px}" cy="{py}" r="3.5" fill="{color}"/>')
+
+    # Side Legend Box
+    leg_x = 580
+    leg_y = 80
+    leg_w = 300
+    leg_h = len(sorted_vars) * 25 + 30
+    svg.append(f'<rect x="{leg_x}" y="{leg_y}" width="{leg_w}" height="{leg_h}" fill="#fcfcfc" stroke="#ddd" rx="6" stroke-width="1"/>')
+    svg.append(f'<text x="{leg_x + 15}" y="{leg_y + 24}" font-size="13" font-weight="bold" fill="#222">Model Variants Legend</text>')
+
+    for idx, var_id in enumerate(sorted_vars):
+        iy = leg_y + 50 + idx * 24
+        color = colors.get(var_id, "#888")
+        label = variant_names.get(var_id, f"Variant {var_id}")
+        svg.append(f'<rect x="{leg_x + 15}" y="{iy - 10}" width="14" height="14" fill="{color}" rx="3"/>')
+        svg.append(f'<text x="{leg_x + 38}" y="{iy + 2}" font-size="11" font-weight="500" fill="#333">{label}</text>')
 
     svg.append('</svg>')
     svg_path.parent.mkdir(parents=True, exist_ok=True)
