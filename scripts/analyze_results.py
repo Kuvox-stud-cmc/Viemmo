@@ -108,7 +108,6 @@ def generate_svg_radar_chart(
     for step in range(1, 4):
         radius = r * (step / 3.0)
         svg.append(f'<circle cx="{cx}" cy="{cy}" r="{radius:.1f}" fill="none" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4,4"/>')
-        svg.append(f'<text x="{cx+5}" y="{cy-radius+12}" font-size="10" font-weight="bold" fill="#888">{step}.0</text>')
 
     # Category Axes
     angles = [i * (2 * math.pi / num_cats) - (math.pi / 2) for i in range(num_cats)]
@@ -140,6 +139,12 @@ def generate_svg_radar_chart(
         for pt in points:
             px, py = pt.split(",")
             svg.append(f'<circle cx="{px}" cy="{py}" r="3.5" fill="{color}"/>')
+
+    # Draw Score Grid Numbers ON TOP of polygons with a white text halo for 100% legibility
+    for step in range(1, 4):
+        radius = r * (step / 3.0)
+        ly = cy - radius - 6 if step == 3 else cy - radius + 12
+        svg.append(f'<text x="{cx+8}" y="{ly:.1f}" font-size="11" font-weight="bold" fill="#444" stroke="#fff" stroke-width="3.5" paint-order="stroke fill">{step}.0</text>')
 
     # Side Legend Box
     leg_x = 580
