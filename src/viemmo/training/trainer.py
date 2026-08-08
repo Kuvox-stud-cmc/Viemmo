@@ -53,6 +53,18 @@ def compute_response_token_accuracy(model, dataset, collator) -> float:
     return round(accuracy, 2)
 
 
+class ViemmoTrainer(Trainer):
+    """Custom Trainer that flushes CUDA memory cache before running evaluation_loop
+    to prevent memory fragmentation and OOM on 4 GB VRAM GPUs.
+    """
+    def evaluation_loop(self, *args, **kwargs):
+        import gc
+        gc.collect()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+        return super().evaluation_loop(*args, **kwargs)
+
+
 def train_qlora_model(
     config_path: Union[str, Path],
     dataset_path: Union[str, Path],
@@ -75,12 +87,27 @@ def train_qlora_model(
     seed = cfg.get("training", {}).get("seed", 42)
     set_seed(seed)
 
-    model_path = model_path_override or os.environ.get("MODEL_PATH")
+    model_id = cfg.get("model", {}).get("id", "")
+    model_dirname = model_id.split("/")[-1] if "/" in model_id else model_id
+
+    storage_root = os.environ.get("LLM_STORAGE_ROOT", "../Viemmo-1B-storage")
+    if storage_root.startswith("/") and len(storage_root) > 2 and storage_root[2] == "/":
+        storage_root = f"{storage_root[1].upper()}:{storage_root[2:]}"
+
+    config_upstream_path = Path(storage_root) / "upstream" / model_dirname
+
+    if model_path_override:
+        model_path = model_path_override
+    elif config_upstream_path.exists():
+        model_path = str(config_upstream_path)
+    else:
+        model_path = os.environ.get("MODEL_PATH")
+
     if model_path and model_path.startswith("/") and len(model_path) > 2 and model_path[2] == "/":
         model_path = f"{model_path[1].upper()}:{model_path[2:]}"
 
     if not model_path or not Path(model_path).exists():
-        raise FileNotFoundError(f"Base model path '{model_path}' does not exist.")
+        raise FileNotFoundError(f"Base model path '{model_path}' does not exist. Download the model to Viemmo-1B-storage/upstream/{model_dirname}/")
 
     use_bf16 = torch.cuda.is_available() and torch.cuda.is_bf16_supported()
     compute_dtype = torch.bfloat16 if use_bf16 else torch.float16
@@ -183,8 +210,19 @@ def train_qlora_model(
                 remove_columns=raw_val_dataset.column_names,
             )
 
+    # Auto-detect response template based on model family
+    model_family = cfg.get("model", {}).get("family", "").lower()
+    model_id = cfg.get("model", {}).get("id", "").lower()
+
+    if "qwen" in model_family or "qwen" in model_id:
+        response_template = "<|im_start|>assistant\n"
+    else:
+        response_template = "<|assistant|>\n"
+
+    print(f"Response Template: {repr(response_template)}")
+
     collator = DataCollatorForVietnameseCompletionLM(
-        response_template="<|assistant|>\n",
+        response_template=response_template,
         tokenizer=tokenizer,
         ignore_index=-100,
     )
@@ -207,6 +245,8 @@ def train_qlora_model(
     training_args = TrainingArguments(
         output_dir=str(checkpoint_dir),
         per_device_train_batch_size=train_cfg.get("micro_batch_size", 1),
+        per_device_eval_batch_size=1,
+        eval_accumulation_steps=1,
         gradient_accumulation_steps=train_cfg.get("gradient_accumulation_steps", 16),
         learning_rate=float(train_cfg.get("learning_rate", 1e-4)),
         weight_decay=0.01,
@@ -235,7 +275,7 @@ def train_qlora_model(
     if eval_enabled and early_stopping_patience > 0:
         callbacks.append(get_early_stopping_callback(patience=early_stopping_patience))
 
-    trainer = Trainer(
+    trainer = ViemmoTrainer(
         model=model,
         args=training_args,
         train_dataset=tokenized_train_dataset,

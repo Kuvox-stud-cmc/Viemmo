@@ -19,7 +19,7 @@ def main() -> None:
     parser.add_argument(
         "--dataset",
         type=str,
-        default="data/training/tiny-sft-v1.jsonl",
+        default="../Viemmo-1B-storage/datasets/pilot-sft-v1/train.jsonl",
         help="Path to JSONL training dataset.",
     )
     parser.add_argument(
@@ -47,7 +47,17 @@ def main() -> None:
         storage_root = os.environ.get("LLM_STORAGE_ROOT", "../Viemmo-1B-storage")
         if storage_root.startswith("/") and len(storage_root) > 2 and storage_root[2] == "/":
             storage_root = f"{storage_root[1].upper()}:{storage_root[2:]}"
-        output_dir = Path(storage_root) / "adapters" / "pilot-sft-v1"
+
+        # Auto-derive adapter directory name from config filename
+        config_stem = Path(args.config).stem  # e.g. "pilot_sft_qwen15b" or "pilot_sft"
+        if "qwen15b" in config_stem:
+            adapter_name = "pilot-qwen15b-lora-v1"
+        elif "qwen3b" in config_stem:
+            adapter_name = "pilot-qwen3b-lora-v1"
+        else:
+            adapter_name = "pilot-vietnamese-lora-v1"
+
+        output_dir = Path(storage_root) / "adapters" / adapter_name
     else:
         output_dir = Path(args.output_dir)
 

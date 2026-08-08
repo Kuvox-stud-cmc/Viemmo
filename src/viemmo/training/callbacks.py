@@ -47,6 +47,16 @@ class VRAMAndGradientCallback(TrainerCallback):
 
         self.metrics_history.append(log_entry)
 
+    def on_evaluate(self, args, state, control, **kwargs):
+        """Flush CUDA memory cache before evaluation to prevent OOM on 4GB GPUs.
+        During training, PyTorch reserves memory blocks for gradients and activations.
+        Evaluation needs extra memory for logits.float() cast, so we free cached blocks first.
+        """
+        import gc
+        gc.collect()
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+
 
 def get_early_stopping_callback(patience: int = 3, threshold: float = 0.0) -> EarlyStoppingCallback:
     """Creates an EarlyStoppingCallback that halts training if validation loss fails to decrease."""

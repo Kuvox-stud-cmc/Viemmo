@@ -26,18 +26,24 @@ The project prioritizes:
 
 This pilot does not attempt to train a foundation model from scratch.
 
-## Selected pilot model
+## Selected pilot models
+
+### Primary base model
 
 - **Model:** `allenai/OLMo-2-0425-1B-Instruct`
 - **Architecture:** `Olmo2ForCausalLM`
-- **Model type:** `olmo2`
 - **Parameters:** ~1.5B
 - **License:** Apache 2.0
 - **Hugging Face revision:** `48d788eca847d4d7548f375ad03d3c9312f6139e`
 
-OLMo was selected because it provides a permissive license and a comparatively open research ecosystem containing training code, recipes, checkpoints, and data documentation.
+OLMo was selected because it provides a permissive license and a comparatively open research ecosystem. The pilot model is primarily English-oriented, making Vietnamese adaptation a meaningful task.
 
-The pilot model is primarily English-oriented. Improving its Vietnamese capabilities is therefore a meaningful adaptation task.
+### Multilingual comparison models
+
+After OLMo-2 evaluation revealed that an English-dominant 1B model cannot achieve Vietnamese fluency via small-scale SFT, two Qwen2.5 models were added for cross-architecture and cross-hardware comparison:
+
+- **Model:** `Qwen/Qwen2.5-1.5B-Instruct` — 1.5B parameters, native Vietnamese, fine-tuned on CUDA (4 GB VRAM)
+- **Model:** `Qwen/Qwen2.5-14B-Instruct` — 14.7B parameters, flagship multilingual model, fine-tuned on Apple Silicon M4 (32 GB Unified Memory) via MLX QLoRA
 
 ## Minimum hardware requirements
 
@@ -210,9 +216,16 @@ Models, datasets, adapters, and checkpoints must not be committed to Git.
 ```text
 Viemmo/Viemmo-1B-storage/
 ├── upstream/
-│   └── OLMo-2-0425-1B-Instruct/
+│   ├── OLMo-2-0425-1B-Instruct/
+│   ├── Qwen2.5-1.5B-Instruct/
+│   └── Qwen2.5-14B-Instruct/
 ├── datasets/
+│   └── pilot-sft-v1/
 ├── adapters/
+│   ├── tiny-overfit-v1/
+│   ├── pilot-vietnamese-lora-v1/
+│   ├── pilot-qwen15b-lora-v1/
+│   └── pilot-qwen14b-mlx-lora-v1/
 ├── checkpoints/
 ├── merged/
 ├── gguf/
@@ -536,12 +549,16 @@ More epochs do not automatically improve the model. Excessive training may incre
 
 Compare the core model variants on the frozen Vietnamese evaluation set:
 
-| Variant | Description |
-|:---:|:---|
-| **A** | Original OLMo 2 1B Instruct |
-| **B** | OLMo + tiny LoRA |
-| **C** | OLMo + pilot Vietnamese LoRA |
-| **D** | Quantized adapted OLMo |
+| Variant | Base Model | Adapter | Hardware / Environment | Description |
+|:---:|:---|:---|:---|:---|
+| **A** | OLMo-2-1B-Instruct | None | NVIDIA CUDA (4GB VRAM) | English-dominant baseline |
+| **B** | OLMo-2-1B-Instruct | Tiny overfit LoRA | NVIDIA CUDA (4GB VRAM) | Pipeline validation (40-epoch overfit) |
+| **C** | OLMo-2-1B-Instruct | Pilot Vietnamese LoRA | NVIDIA CUDA (4GB VRAM) | 1,800-sample Vietnamese SFT |
+| **D** | OLMo-2-1B-Instruct | GGUF quantized | CPU / Offline | Offline deployment variant |
+| **E** | Qwen2.5-1.5B-Instruct | None | NVIDIA CUDA (4GB VRAM) | Multilingual baseline (native Vietnamese) |
+| **F** | Qwen2.5-1.5B-Instruct | Pilot Vietnamese LoRA | NVIDIA CUDA (4GB VRAM) | 1,800-sample SFT on 1.5B base |
+| **G** | Qwen2.5-14B-Instruct | None | Apple Silicon M4 / MPS | Flagship 14B multilingual baseline |
+| **H** | Qwen2.5-14B-Instruct | Pilot Vietnamese MLX LoRA | Apple Silicon M4 (32GB) | Flagship 14B SFT fine-tuned via MLX |
 
 All variants use the same frozen evaluation set.
 

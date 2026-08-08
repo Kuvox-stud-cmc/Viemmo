@@ -1,0 +1,41 @@
+# ==============================================================================
+# Viemmo-1B: Qwen2.5-14B MLX QLoRA Fine-Tuning Configuration
+# ==============================================================================
+# Target Hardware: Apple Silicon Mac Mini M4 (32 GB Unified Memory)
+# Framework: Apple MLX (mlx-lm)
+# Base Model: Qwen/Qwen2.5-14B-Instruct
+#
+# Memory Budget (32 GB Unified Memory):
+#  - 4-bit Base Model Weights: ~8.0 GB
+#  - QLoRA Adapter & Optimizer: ~1.0 GB
+#  - Activations & Context (seq_len 1024): ~4.0 GB
+#  - Peak Memory Usage: ~13.0 GB (Comfortably fits in 32 GB RAM)
+# ==============================================================================
+
+model:
+  id: Qwen/Qwen2.5-14B-Instruct
+  family: qwen2
+
+quantization:
+  bits: 4
+  group_size: 64
+
+lora:
+  num_layers: 16
+  rank: 8
+  alpha: 16
+  dropout: 0.05
+  keys:
+    - self_attn.q_proj
+    - self_attn.v_proj
+
+training:
+  batch_size: 1
+  iters: 600
+  val_batches: 25
+  learning_rate: 1e-4
+  steps_per_report: 10
+  steps_per_eval: 50
+  save_every: 100
+  adapter_path: ../Viemmo-1B-storage/adapters/pilot-qwen14b-mlx-lora-v1
+  seed: 42
