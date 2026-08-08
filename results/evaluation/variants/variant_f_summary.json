@@ -1,0 +1,25 @@
+{
+  "variant_id": "F",
+  "variant_name": "Fine-Tuned Qwen2.5-1.5B (Variant F)",
+  "variant_description": "Qwen2.5-1.5B with Vietnamese SFT pilot LoRA adapter (same 1800-sample dataset)",
+  "base_model_path": "/Users/nghiemgiabao/Desktop/projects/Viemmo/Viemmo-storage/upstream/Qwen2.5-1.5B-Instruct",
+  "adapter_path": "../Viemmo-storage/adapters/pilot-qwen15b-lora-v1",
+  "benchmark_file": "data/evaluation/vietnamese-pilot-v1.jsonl",
+  "git_commit_hash": "f601a62df0a9d26e10ae11e57141550c7bb1d4a6",
+  "benchmark_checksum": "072f02145fa951d7ee5ae41e058ad6953e16427239f1be5733ad4272e8587f29",
+  "generation_parameters": {
+    "do_sample": false,
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_new_tokens": 256,
+    "seed": 42,
+    "repetition_penalty": 1.1
+  },
+  "total_prompts": 30,
+  "total_generated_tokens": 1937,
+  "total_evaluation_time_sec": 116.38,
+  "average_prompt_latency_sec": 3.8793,
+  "average_tokens_per_sec": 16.64,
+  "hit_max_tokens_count": 0,
+  "peak_vram_mb": 0.0
+}

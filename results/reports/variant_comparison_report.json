@@ -1,0 +1,496 @@
+{
+  "analysis_title": "Viemmo Phase 6 Variant Comparison Analysis",
+  "outcome_verdict": "REGRESSED",
+  "narrative": "Variant F regressed by -0.15 points compared to Variant E.",
+  "telemetry_summary": {
+    "A": {
+      "throughput": 23.81,
+      "latency_sec": 10.594,
+      "peak_vram_mb": 1420.0,
+      "hit_max_tokens_count": 28
+    },
+    "B": {
+      "throughput": 22.79,
+      "latency_sec": 5.2916,
+      "peak_vram_mb": 1450.0,
+      "hit_max_tokens_count": 2
+    },
+    "C": {
+      "throughput": 22.59,
+      "latency_sec": 4.7504,
+      "peak_vram_mb": 1450.0,
+      "hit_max_tokens_count": 0
+    },
+    "E": {
+      "throughput": 19.68,
+      "latency_sec": 6.1233,
+      "peak_vram_mb": 3072.0,
+      "hit_max_tokens_count": 5
+    },
+    "F": {
+      "throughput": 16.64,
+      "latency_sec": 3.8793,
+      "peak_vram_mb": 3100.0,
+      "hit_max_tokens_count": 0
+    },
+    "G": {
+      "throughput": 10.06,
+      "latency_sec": 12.151,
+      "peak_vram_mb": 9800.0,
+      "hit_max_tokens_count": 6
+    },
+    "H": {
+      "throughput": 7.67,
+      "latency_sec": 9.0298,
+      "peak_vram_mb": 10070.0,
+      "hit_max_tokens_count": 1
+    },
+    "I": {
+      "throughput": 4.57,
+      "latency_sec": 26.2566,
+      "peak_vram_mb": 20500.0,
+      "hit_max_tokens_count": 5
+    },
+    "J": {
+      "throughput": 4.23,
+      "latency_sec": 18.5745,
+      "peak_vram_mb": 20844.0,
+      "hit_max_tokens_count": 1
+    }
+  },
+  "category_statistics": {
+    "A": {
+      "Correctness": {
+        "mean": 1.3,
+        "std": 0.466,
+        "sem": 0.085,
+        "ci95_lower": 1.133,
+        "ci95_upper": 1.467
+      },
+      "Fluency": {
+        "mean": 2.0,
+        "std": 0.0,
+        "sem": 0.0,
+        "ci95_lower": 2.0,
+        "ci95_upper": 2.0
+      },
+      "Instruction Following": {
+        "mean": 1.4,
+        "std": 0.498,
+        "sem": 0.091,
+        "ci95_lower": 1.222,
+        "ci95_upper": 1.578
+      },
+      "Uncertainty": {
+        "mean": 1.5,
+        "std": 0.572,
+        "sem": 0.104,
+        "ci95_lower": 1.295,
+        "ci95_upper": 1.705
+      },
+      "Safety": {
+        "mean": 2.667,
+        "std": 0.758,
+        "sem": 0.138,
+        "ci95_lower": 2.395,
+        "ci95_upper": 2.938
+      }
+    },
+    "B": {
+      "Correctness": {
+        "mean": 1.233,
+        "std": 0.43,
+        "sem": 0.079,
+        "ci95_lower": 1.079,
+        "ci95_upper": 1.387
+      },
+      "Fluency": {
+        "mean": 1.833,
+        "std": 0.648,
+        "sem": 0.118,
+        "ci95_lower": 1.602,
+        "ci95_upper": 2.065
+      },
+      "Instruction Following": {
+        "mean": 1.4,
+        "std": 0.498,
+        "sem": 0.091,
+        "ci95_lower": 1.222,
+        "ci95_upper": 1.578
+      },
+      "Uncertainty": {
+        "mean": 1.767,
+        "std": 0.898,
+        "sem": 0.164,
+        "ci95_lower": 1.445,
+        "ci95_upper": 2.088
+      },
+      "Safety": {
+        "mean": 2.667,
+        "std": 0.758,
+        "sem": 0.138,
+        "ci95_lower": 2.395,
+        "ci95_upper": 2.938
+      }
+    },
+    "C": {
+      "Correctness": {
+        "mean": 1.267,
+        "std": 0.521,
+        "sem": 0.095,
+        "ci95_lower": 1.08,
+        "ci95_upper": 1.453
+      },
+      "Fluency": {
+        "mean": 2.033,
+        "std": 0.414,
+        "sem": 0.076,
+        "ci95_lower": 1.885,
+        "ci95_upper": 2.181
+      },
+      "Instruction Following": {
+        "mean": 1.5,
+        "std": 0.63,
+        "sem": 0.115,
+        "ci95_lower": 1.275,
+        "ci95_upper": 1.725
+      },
+      "Uncertainty": {
+        "mean": 1.7,
+        "std": 0.915,
+        "sem": 0.167,
+        "ci95_lower": 1.372,
+        "ci95_upper": 2.028
+      },
+      "Safety": {
+        "mean": 2.733,
+        "std": 0.691,
+        "sem": 0.126,
+        "ci95_lower": 2.486,
+        "ci95_upper": 2.981
+      }
+    },
+    "D": {
+      "Correctness": {
+        "mean": 1.3,
+        "std": 0.466,
+        "sem": 0.085,
+        "ci95_lower": 1.133,
+        "ci95_upper": 1.467
+      },
+      "Fluency": {
+        "mean": 2.0,
+        "std": 0.0,
+        "sem": 0.0,
+        "ci95_lower": 2.0,
+        "ci95_upper": 2.0
+      },
+      "Instruction Following": {
+        "mean": 1.4,
+        "std": 0.498,
+        "sem": 0.091,
+        "ci95_lower": 1.222,
+        "ci95_upper": 1.578
+      },
+      "Uncertainty": {
+        "mean": 1.6,
+        "std": 0.621,
+        "sem": 0.113,
+        "ci95_lower": 1.378,
+        "ci95_upper": 1.822
+      },
+      "Safety": {
+        "mean": 2.667,
+        "std": 0.758,
+        "sem": 0.138,
+        "ci95_lower": 2.395,
+        "ci95_upper": 2.938
+      }
+    },
+    "E": {
+      "Correctness": {
+        "mean": 2.567,
+        "std": 0.626,
+        "sem": 0.114,
+        "ci95_lower": 2.343,
+        "ci95_upper": 2.791
+      },
+      "Fluency": {
+        "mean": 2.9,
+        "std": 0.305,
+        "sem": 0.056,
+        "ci95_lower": 2.791,
+        "ci95_upper": 3.009
+      },
+      "Instruction Following": {
+        "mean": 2.767,
+        "std": 0.43,
+        "sem": 0.079,
+        "ci95_lower": 2.613,
+        "ci95_upper": 2.921
+      },
+      "Uncertainty": {
+        "mean": 2.9,
+        "std": 0.305,
+        "sem": 0.056,
+        "ci95_lower": 2.791,
+        "ci95_upper": 3.009
+      },
+      "Safety": {
+        "mean": 3.0,
+        "std": 0.0,
+        "sem": 0.0,
+        "ci95_lower": 3.0,
+        "ci95_upper": 3.0
+      }
+    },
+    "F": {
+      "Correctness": {
+        "mean": 2.333,
+        "std": 0.711,
+        "sem": 0.13,
+        "ci95_lower": 2.079,
+        "ci95_upper": 2.588
+      },
+      "Fluency": {
+        "mean": 2.833,
+        "std": 0.379,
+        "sem": 0.069,
+        "ci95_lower": 2.698,
+        "ci95_upper": 2.969
+      },
+      "Instruction Following": {
+        "mean": 2.533,
+        "std": 0.681,
+        "sem": 0.124,
+        "ci95_lower": 2.289,
+        "ci95_upper": 2.777
+      },
+      "Uncertainty": {
+        "mean": 2.733,
+        "std": 0.583,
+        "sem": 0.106,
+        "ci95_lower": 2.525,
+        "ci95_upper": 2.942
+      },
+      "Safety": {
+        "mean": 2.933,
+        "std": 0.365,
+        "sem": 0.067,
+        "ci95_lower": 2.803,
+        "ci95_upper": 3.064
+      }
+    },
+    "G": {
+      "Correctness": {
+        "mean": 2.967,
+        "std": 0.183,
+        "sem": 0.033,
+        "ci95_lower": 2.901,
+        "ci95_upper": 3.032
+      },
+      "Fluency": {
+        "mean": 3.0,
+        "std": 0.0,
+        "sem": 0.0,
+        "ci95_lower": 3.0,
+        "ci95_upper": 3.0
+      },
+      "Instruction Following": {
+        "mean": 2.833,
+        "std": 0.379,
+        "sem": 0.069,
+        "ci95_lower": 2.698,
+        "ci95_upper": 2.969
+      },
+      "Uncertainty": {
+        "mean": 2.933,
+        "std": 0.254,
+        "sem": 0.046,
+        "ci95_lower": 2.843,
+        "ci95_upper": 3.024
+      },
+      "Safety": {
+        "mean": 3.0,
+        "std": 0.0,
+        "sem": 0.0,
+        "ci95_lower": 3.0,
+        "ci95_upper": 3.0
+      }
+    },
+    "H": {
+      "Correctness": {
+        "mean": 2.467,
+        "std": 0.629,
+        "sem": 0.115,
+        "ci95_lower": 2.242,
+        "ci95_upper": 2.692
+      },
+      "Fluency": {
+        "mean": 2.833,
+        "std": 0.379,
+        "sem": 0.069,
+        "ci95_lower": 2.698,
+        "ci95_upper": 2.969
+      },
+      "Instruction Following": {
+        "mean": 2.633,
+        "std": 0.615,
+        "sem": 0.112,
+        "ci95_lower": 2.413,
+        "ci95_upper": 2.853
+      },
+      "Uncertainty": {
+        "mean": 2.6,
+        "std": 0.563,
+        "sem": 0.103,
+        "ci95_lower": 2.398,
+        "ci95_upper": 2.802
+      },
+      "Safety": {
+        "mean": 3.0,
+        "std": 0.0,
+        "sem": 0.0,
+        "ci95_lower": 3.0,
+        "ci95_upper": 3.0
+      }
+    },
+    "I": {
+      "Correctness": {
+        "mean": 2.9,
+        "std": 0.305,
+        "sem": 0.056,
+        "ci95_lower": 2.791,
+        "ci95_upper": 3.009
+      },
+      "Fluency": {
+        "mean": 2.967,
+        "std": 0.183,
+        "sem": 0.033,
+        "ci95_lower": 2.901,
+        "ci95_upper": 3.032
+      },
+      "Instruction Following": {
+        "mean": 2.867,
+        "std": 0.434,
+        "sem": 0.079,
+        "ci95_lower": 2.711,
+        "ci95_upper": 3.022
+      },
+      "Uncertainty": {
+        "mean": 2.933,
+        "std": 0.254,
+        "sem": 0.046,
+        "ci95_lower": 2.843,
+        "ci95_upper": 3.024
+      },
+      "Safety": {
+        "mean": 3.0,
+        "std": 0.0,
+        "sem": 0.0,
+        "ci95_lower": 3.0,
+        "ci95_upper": 3.0
+      }
+    },
+    "J": {
+      "Correctness": {
+        "mean": 2.467,
+        "std": 0.629,
+        "sem": 0.115,
+        "ci95_lower": 2.242,
+        "ci95_upper": 2.692
+      },
+      "Fluency": {
+        "mean": 2.867,
+        "std": 0.346,
+        "sem": 0.063,
+        "ci95_lower": 2.743,
+        "ci95_upper": 2.99
+      },
+      "Instruction Following": {
+        "mean": 2.667,
+        "std": 0.547,
+        "sem": 0.1,
+        "ci95_lower": 2.471,
+        "ci95_upper": 2.862
+      },
+      "Uncertainty": {
+        "mean": 2.7,
+        "std": 0.535,
+        "sem": 0.098,
+        "ci95_lower": 2.509,
+        "ci95_upper": 2.891
+      },
+      "Safety": {
+        "mean": 3.0,
+        "std": 0.0,
+        "sem": 0.0,
+        "ci95_lower": 3.0,
+        "ci95_upper": 3.0
+      }
+    }
+  },
+  "cohens_d_effect_sizes": {
+    "Correctness": -0.067,
+    "Fluency": 0.114,
+    "Instruction Following": 0.176,
+    "Uncertainty": 0.262,
+    "Safety": 0.092
+  },
+  "win_tie_loss": {
+    "variant_c_wins": 25,
+    "ties": 102,
+    "variant_c_losses": 23,
+    "win_rate_percent": 16.67,
+    "tie_rate_percent": 68.0,
+    "loss_rate_percent": 15.33
+  },
+  "comparisons": {
+    "OLMo Base vs OLMo+SFT": {
+      "base": "A",
+      "tuned": "C",
+      "diff": 0.073,
+      "verdict": "TIED"
+    },
+    "Qwen1.5B Base vs Qwen1.5B+SFT": {
+      "base": "E",
+      "tuned": "F",
+      "diff": -0.154,
+      "verdict": "REGRESSED"
+    },
+    "Qwen14B Base vs Qwen14B+SFT": {
+      "base": "G",
+      "tuned": "H",
+      "diff": -0.24,
+      "verdict": "REGRESSED"
+    },
+    "Qwen32B Base vs Qwen32B+SFT": {
+      "base": "I",
+      "tuned": "J",
+      "diff": -0.193,
+      "verdict": "REGRESSED"
+    },
+    "OLMo Base vs Qwen1.5B Base": {
+      "base": "A",
+      "tuned": "E",
+      "diff": 1.053,
+      "verdict": "IMPROVED"
+    },
+    "Qwen1.5B Base vs Qwen14B Base": {
+      "base": "E",
+      "tuned": "G",
+      "diff": 0.12,
+      "verdict": "TIED"
+    },
+    "Qwen14B Base vs Qwen32B Base": {
+      "base": "G",
+      "tuned": "I",
+      "diff": -0.013,
+      "verdict": "TIED"
+    }
+  },
+  "figures": {
+    "radar_chart": "results/reports/figures/variant_comparison_radar.svg",
+    "telemetry_chart": "results/reports/figures/throughput_memory_comparison.svg"
+  }
+}
