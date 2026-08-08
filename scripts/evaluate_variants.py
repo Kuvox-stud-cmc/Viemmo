@@ -44,6 +44,19 @@ def compute_sha256(filepath: Path) -> str:
     return sha256.hexdigest()
 
 
+def get_peak_memory_mb() -> float:
+    """Returns peak CUDA VRAM allocation on NVIDIA GPUs or peak Unified System RAM on macOS."""
+    if torch.cuda.is_available():
+        return torch.cuda.max_memory_allocated() / (1024 * 1024)
+    try:
+        import resource
+        import sys
+        rusage = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+        return round(rusage / (1024 * 1024), 2) if sys.platform == "darwin" else round(rusage / 1024, 2)
+    except Exception:
+        return 0.0
+
+
 def get_git_commit_hash() -> str:
     """Retrieves current Git commit hash."""
     try:
@@ -216,6 +229,7 @@ def evaluate_variant(
 
         avg_latency = round(total_eval_duration / len(prompts_data), 4) if prompts_data else 0.0
         avg_tokens_per_sec = round(total_new_tokens / total_eval_duration, 2) if total_eval_duration > 0 else 0.0
+        peak_mem_mb = get_peak_memory_mb()
 
         summary_data = {
             "variant_id": variant_id,
@@ -233,7 +247,7 @@ def evaluate_variant(
             "average_prompt_latency_sec": avg_latency,
             "average_tokens_per_sec": avg_tokens_per_sec,
             "hit_max_tokens_count": hit_max_tokens_count,
-            "peak_vram_mb": 0.0,
+            "peak_vram_mb": peak_mem_mb,
         }
         summary_json.write_text(json.dumps(summary_data, indent=2, ensure_ascii=False), encoding="utf-8")
         print(f"\n==================================================")
