@@ -40,10 +40,11 @@ OLMo was selected because it provides a permissive license and a comparatively o
 
 ### Multilingual comparison models
 
-After OLMo-2 evaluation revealed that an English-dominant 1B model cannot achieve Vietnamese fluency via small-scale SFT, two Qwen2.5 models were added for cross-architecture and cross-hardware comparison:
+After OLMo-2 evaluation revealed that an English-dominant 1B model cannot achieve Vietnamese fluency via small-scale SFT, three Qwen2.5 models were added for cross-architecture and cross-hardware scaling comparison:
 
 - **Model:** `Qwen/Qwen2.5-1.5B-Instruct` — 1.5B parameters, native Vietnamese, fine-tuned on CUDA (4 GB VRAM)
-- **Model:** `Qwen/Qwen2.5-14B-Instruct` — 14.7B parameters, flagship multilingual model, fine-tuned on Apple Silicon M4 (32 GB Unified Memory) via MLX QLoRA
+- **Model:** `Qwen/Qwen2.5-14B-Instruct` — 14.7B parameters, flagship multilingual model, fine-tuned on Apple Silicon M4 (32 GB RAM) via MLX QLoRA
+- **Model:** `Qwen/Qwen2.5-32B-Instruct` — 32.5B parameters, ultra-large multilingual model, fine-tuned on Apple Silicon M4 (32 GB RAM) via MLX QLoRA
 
 ## Minimum hardware requirements
 
@@ -222,14 +223,16 @@ Viemmo/Viemmo-storage/
 ├── upstream/
 │   ├── OLMo-2-0425-1B-Instruct/
 │   ├── Qwen2.5-1.5B-Instruct/
-│   └── Qwen2.5-14B-Instruct/
+│   ├── Qwen2.5-14B-Instruct-4bit/
+│   └── Qwen2.5-32B-Instruct-4bit/
 ├── datasets/
 │   └── pilot-sft-v1/
 ├── adapters/
 │   ├── tiny-overfit-v1/
 │   ├── pilot-vietnamese-lora-v1/
 │   ├── pilot-qwen15b-lora-v1/
-│   └── pilot-qwen14b-mlx-lora-v1/
+│   ├── pilot-qwen14b-mlx-lora-v1/
+│   └── pilot-qwen32b-mlx-lora-v1/
 ├── checkpoints/
 ├── merged/
 ├── gguf/
@@ -561,8 +564,10 @@ Compare the core model variants on the frozen Vietnamese evaluation set:
 | **D** | OLMo-2-1B-Instruct | GGUF quantized | CPU / Offline | Offline deployment variant |
 | **E** | Qwen2.5-1.5B-Instruct | None | NVIDIA CUDA (4GB VRAM) | Multilingual baseline (native Vietnamese) |
 | **F** | Qwen2.5-1.5B-Instruct | Pilot Vietnamese LoRA | NVIDIA CUDA (4GB VRAM) | 1,800-sample SFT on 1.5B base |
-| **G** | Qwen2.5-14B-Instruct | None | Apple Silicon M4 / MPS | Flagship 14B multilingual baseline |
+| **G** | Qwen2.5-14B-Instruct | None | Apple Silicon M4 (32GB) | Flagship 14B multilingual baseline |
 | **H** | Qwen2.5-14B-Instruct | Pilot Vietnamese MLX LoRA | Apple Silicon M4 (32GB) | Flagship 14B SFT fine-tuned via MLX |
+| **I** | Qwen2.5-32B-Instruct | None | Apple Silicon M4 (32GB) | Ultra-large 32B multilingual baseline |
+| **J** | Qwen2.5-32B-Instruct | Pilot Vietnamese MLX LoRA | Apple Silicon M4 (32GB) | Ultra-large 32B SFT fine-tuned via MLX |
 
 All variants use the same frozen evaluation set.
 

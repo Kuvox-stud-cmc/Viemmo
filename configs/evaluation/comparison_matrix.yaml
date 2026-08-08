@@ -74,3 +74,17 @@ variants:
     type: lora_adapter
     base_model_path: upstream/Qwen2.5-14B-Instruct
     adapter_path: ../Viemmo-storage/adapters/pilot-qwen14b-mlx-lora-v1
+
+  I:
+    name: Base Model (Qwen2.5-32B-Instruct)
+    description: Ultra-large Qwen2.5-32B-Instruct baseline model
+    type: base_model
+    base_model_path: upstream/Qwen2.5-32B-Instruct
+    adapter_path: null
+
+  J:
+    name: Fine-Tuned Qwen2.5-32B (Variant J)
+    description: Qwen2.5-32B fine-tuned on Apple Silicon M4 32GB via MLX QLoRA
+    type: lora_adapter
+    base_model_path: upstream/Qwen2.5-32B-Instruct
+    adapter_path: ../Viemmo-storage/adapters/pilot-qwen32b-mlx-lora-v1

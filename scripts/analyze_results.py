@@ -87,7 +87,8 @@ def generate_svg_radar_chart(
 
     # Concentric circles (0 to 3 score grid)
     colors = {"A": "#1f77b4", "B": "#2ca02c", "C": "#ff7f0e", "D": "#d62728",
-              "E": "#9467bd", "F": "#8c564b", "G": "#e377c2", "H": "#7f7f7f"}
+              "E": "#9467bd", "F": "#8c564b", "G": "#e377c2", "H": "#7f7f7f",
+              "I": "#bcbd22", "J": "#17becf"}
     for step in range(1, 4):
         radius = r * (step / 3.0)
         svg.append(f'<circle cx="{cx}" cy="{cy}" r="{radius:.1f}" fill="none" stroke="#e0e0e0" stroke-width="1.5" stroke-dasharray="4,4"/>')
@@ -260,7 +261,15 @@ def analyze_results(
 
     # Determine Verdict for key comparisons
     comparisons = {}
-    comparison_pairs = [("A", "C", "OLMo Base vs OLMo+SFT"), ("E", "F", "Qwen1.5B Base vs Qwen1.5B+SFT"), ("H", "G", "Qwen3B Base vs Qwen3B+SFT"), ("A", "E", "OLMo Base vs Qwen1.5B Base")]
+    comparison_pairs = [
+        ("A", "C", "OLMo Base vs OLMo+SFT"),
+        ("E", "F", "Qwen1.5B Base vs Qwen1.5B+SFT"),
+        ("G", "H", "Qwen14B Base vs Qwen14B+SFT"),
+        ("I", "J", "Qwen32B Base vs Qwen32B+SFT"),
+        ("A", "E", "OLMo Base vs Qwen1.5B Base"),
+        ("E", "G", "Qwen1.5B Base vs Qwen14B Base"),
+        ("G", "I", "Qwen14B Base vs Qwen32B Base"),
+    ]
     for base_id, tuned_id, label in comparison_pairs:
         if base_id in radar_means and tuned_id in radar_means:
             mean_base = sum(radar_means[base_id]) / max(1, len(radar_means[base_id]))
@@ -359,6 +368,8 @@ def main() -> None:
     parser.add_argument("--summary-f", type=str, default="results/evaluation/variants/variant_f_summary.json", help="Path to Variant F summary JSON.")
     parser.add_argument("--summary-g", type=str, default="results/evaluation/variants/variant_g_summary.json", help="Path to Variant G summary JSON.")
     parser.add_argument("--summary-h", type=str, default="results/evaluation/variants/variant_h_summary.json", help="Path to Variant H summary JSON.")
+    parser.add_argument("--summary-i", type=str, default="results/evaluation/variants/variant_i_summary.json", help="Path to Variant I summary JSON.")
+    parser.add_argument("--summary-j", type=str, default="results/evaluation/variants/variant_j_summary.json", help="Path to Variant J summary JSON.")
 
     parser.add_argument("--human-scores", type=str, default="results/evaluation/human_scores_matrix.json", help="Path to human scores matrix JSON.")
     parser.add_argument("--output-dir", type=str, default="results/reports", help="Directory to save report JSON and figures.")
@@ -367,7 +378,8 @@ def main() -> None:
 
     variant_summaries = {}
     for var_id, attr in [("A", "summary_a"), ("B", "summary_b"), ("C", "summary_c"),
-                         ("E", "summary_e"), ("F", "summary_f"), ("G", "summary_g"), ("H", "summary_h")]:
+                         ("E", "summary_e"), ("F", "summary_f"), ("G", "summary_g"),
+                         ("H", "summary_h"), ("I", "summary_i"), ("J", "summary_j")]:
         path = Path(getattr(args, attr))
         if path.exists():
             variant_summaries[var_id] = path

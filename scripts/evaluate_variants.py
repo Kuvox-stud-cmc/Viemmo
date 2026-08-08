@@ -298,9 +298,9 @@ def main() -> None:
         "--variant",
         type=str,
         default="A",
-        choices=["A", "B", "C", "D", "E", "F", "G", "H", "ALL",
-                 "a", "b", "c", "d", "e", "f", "g", "h", "all"],
-        help="Variant ID to evaluate (A-H, or ALL).",
+        choices=["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "ALL",
+                 "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "all"],
+        help="Variant ID to evaluate (A-J, or ALL).",
     )
     parser.add_argument(
         "--config",
