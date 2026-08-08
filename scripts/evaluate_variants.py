@@ -255,25 +255,44 @@ def evaluate_variant(
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
-    # Load Base Model in 4-bit NF4
-    use_bf16 = torch.cuda.is_available() and torch.cuda.is_bf16_supported()
-    compute_dtype = torch.bfloat16 if use_bf16 else torch.float16
-
-    bnb_config = BitsAndBytesConfig(
-        load_in_4bit=True,
-        bnb_4bit_quant_type="nf4",
-        bnb_4bit_use_double_quant=True,
-        bnb_4bit_compute_dtype=compute_dtype,
-    )
+    # Device & precision detection (CUDA > MPS Metal GPU > CPU)
+    if torch.cuda.is_available():
+        device_str = "cuda"
+        use_bf16 = torch.cuda.is_bf16_supported()
+        compute_dtype = torch.bfloat16 if use_bf16 else torch.float16
+        bnb_config = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_quant_type="nf4",
+            bnb_4bit_use_double_quant=True,
+            bnb_4bit_compute_dtype=compute_dtype,
+        )
+        model_kwargs = {
+            "quantization_config": bnb_config,
+            "device_map": {"": 0},
+            "torch_dtype": compute_dtype,
+            "attn_implementation": "eager",
+        }
+    elif hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
+        device_str = "mps (Apple Metal GPU)"
+        print("Using Apple Silicon MPS Metal GPU acceleration for PyTorch model...")
+        model_kwargs = {
+            "torch_dtype": torch.float16,
+            "device_map": "mps",
+            "attn_implementation": "eager",
+        }
+    else:
+        device_str = "cpu"
+        model_kwargs = {
+            "torch_dtype": torch.float32,
+            "device_map": "cpu",
+            "attn_implementation": "eager",
+        }
 
     model = AutoModelForCausalLM.from_pretrained(
         str(base_model_path),
         local_files_only=True,
         trust_remote_code=False,
-        quantization_config=bnb_config,
-        device_map={"": 0} if torch.cuda.is_available() else "auto",
-        torch_dtype=compute_dtype,
-        attn_implementation="eager",
+        **model_kwargs,
     )
 
     # Attach Adapter if Variant B or C
