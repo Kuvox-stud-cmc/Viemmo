@@ -273,11 +273,10 @@ def evaluate_variant(
             "attn_implementation": "eager",
         }
     elif hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
-        device_str = "mps (Apple Metal GPU)"
+        device_str = "mps"
         print("Using Apple Silicon MPS Metal GPU acceleration for PyTorch model...")
         model_kwargs = {
             "torch_dtype": torch.float16,
-            "device_map": "mps",
             "attn_implementation": "eager",
         }
     else:
@@ -294,6 +293,9 @@ def evaluate_variant(
         trust_remote_code=False,
         **model_kwargs,
     )
+
+    if device_str == "mps":
+        model = model.to("mps")
 
     # Attach Adapter if Variant B or C
     if adapter_path is not None and str(adapter_path) != "null":
