@@ -126,6 +126,126 @@ def evaluate_variant(
     print(f"Max New Tokens:  {gen_params.get('max_new_tokens', 256)}")
     print(f"==================================================\n")
 
+    # Check if MLX evaluation should be used (for macOS / MLX 14B & 32B variants G, H, I, J)
+    is_mlx_variant = (variant_id in ["G", "H", "I", "J"]) or ("mlx" in str(base_model_path).lower()) or ("14b" in str(base_model_path).lower()) or ("32b" in str(base_model_path).lower())
+    use_mlx = False
+    try:
+        import mlx.core as mx
+        import mlx_lm
+        use_mlx = is_mlx_variant or (not torch.cuda.is_available() and is_mlx_variant)
+    except ImportError:
+        use_mlx = False
+
+    if use_mlx:
+        print(f"--- Using Apple MLX Engine for Variant {variant_id} Evaluation ---")
+        mlx_model_id = "mlx-community/Qwen2.5-32B-Instruct-4bit" if ("32" in variant_id or "32b" in str(base_model_path).lower() or variant_id in ["I", "J"]) else "mlx-community/Qwen2.5-14B-Instruct-4bit"
+        adapter_kw = {"adapter_path": str(adapter_path)} if adapter_path and adapter_path.exists() else {}
+        print(f"MLX Model ID: {mlx_model_id}")
+        print(f"MLX Adapter:  {adapter_kw.get('adapter_path', 'None')}")
+
+        model, tokenizer = mlx_lm.load(mlx_model_id, **adapter_kw)
+
+        prompts_data = []
+        with open(benchmark_file, "r", encoding="utf-8") as f:
+            for line in f:
+                if line.strip():
+                    prompts_data.append(json.loads(line.strip()))
+
+        print(f"Loaded {len(prompts_data)} benchmark items for MLX evaluation.")
+        results_jsonl = output_dir / f"variant_{variant_id.lower()}_results.jsonl"
+        summary_json = output_dir / f"variant_{variant_id.lower()}_summary.json"
+        max_new_tokens = gen_params.get("max_new_tokens", 256)
+
+        items_results = []
+        total_new_tokens = 0
+        total_eval_duration = 0.0
+        hit_max_tokens_count = 0
+
+        with open(results_jsonl, "w", encoding="utf-8") as out_f:
+            for idx, item in enumerate(prompts_data, 1):
+                prompt_id = item.get("id", f"prompt_{idx}")
+                category = item.get("category", "general")
+                messages = item.get("messages", [])
+
+                formatted_prompt = tokenizer.apply_chat_template(
+                    messages,
+                    tokenize=False,
+                    add_generation_prompt=True,
+                )
+                input_ids = tokenizer.encode(formatted_prompt)
+                input_len = len(input_ids)
+
+                t0 = time.perf_counter()
+                generated_text = mlx_lm.generate(
+                    model,
+                    tokenizer,
+                    prompt=formatted_prompt,
+                    max_tokens=max_new_tokens,
+                    verbose=False,
+                )
+                duration = time.perf_counter() - t0
+
+                gen_ids = tokenizer.encode(generated_text)
+                new_tokens_count = len(gen_ids)
+                hit_max_tokens = new_tokens_count >= max_new_tokens
+                if hit_max_tokens:
+                    hit_max_tokens_count += 1
+
+                total_new_tokens += new_tokens_count
+                total_eval_duration += duration
+
+                item_res = {
+                    "variant_id": variant_id,
+                    "prompt_id": prompt_id,
+                    "category": category,
+                    "formatted_prompt": formatted_prompt,
+                    "generated_text": generated_text,
+                    "input_token_count": input_len,
+                    "output_token_count": new_tokens_count,
+                    "total_token_count": input_len + new_tokens_count,
+                    "latency_sec": round(duration, 4),
+                    "tokens_per_sec": round(new_tokens_count / duration, 2) if duration > 0 else 0.0,
+                    "hit_max_tokens": hit_max_tokens,
+                    "peak_vram_mb": 0.0,
+                }
+                items_results.append(item_res)
+                out_f.write(json.dumps(item_res, ensure_ascii=False) + "\n")
+                print(f" Prompt {idx:02d}/{len(prompts_data):02d} [{prompt_id}] -> {new_tokens_count} tokens in {duration:.2f}s ({item_res['tokens_per_sec']} tok/s)")
+
+        avg_latency = round(total_eval_duration / len(prompts_data), 4) if prompts_data else 0.0
+        avg_tokens_per_sec = round(total_new_tokens / total_eval_duration, 2) if total_eval_duration > 0 else 0.0
+
+        summary_data = {
+            "variant_id": variant_id,
+            "variant_name": variant_info["name"],
+            "variant_description": variant_info.get("description"),
+            "base_model_path": mlx_model_id,
+            "adapter_path": str(adapter_path) if adapter_path else None,
+            "benchmark_file": str(benchmark_file),
+            "git_commit_hash": get_git_commit_hash(),
+            "benchmark_checksum": compute_sha256(benchmark_file) if benchmark_file.exists() else None,
+            "generation_parameters": gen_params,
+            "total_prompts": len(prompts_data),
+            "total_generated_tokens": total_new_tokens,
+            "total_evaluation_time_sec": round(total_eval_duration, 2),
+            "average_prompt_latency_sec": avg_latency,
+            "average_tokens_per_sec": avg_tokens_per_sec,
+            "hit_max_tokens_count": hit_max_tokens_count,
+            "peak_vram_mb": 0.0,
+        }
+        summary_json.write_text(json.dumps(summary_data, indent=2, ensure_ascii=False), encoding="utf-8")
+        print(f"\n==================================================")
+        print(f"   Variant {variant_id} MLX Evaluation Complete")
+        print(f"==================================================")
+        print(f"Results JSONL:  {results_jsonl}")
+        print(f"Summary JSON:   {summary_json}")
+        print(f"Total Time:     {round(total_eval_duration, 2)} sec")
+        print(f"Avg Latency:    {avg_latency} sec/prompt")
+        print(f"Avg Throughput: {avg_tokens_per_sec} tokens/sec")
+        print(f"==================================================\n")
+        return summary_data
+
+    # PyTorch Evaluation Path for CUDA/CPU models (Variants A-F)
     # Load Tokenizer
     tokenizer = AutoTokenizer.from_pretrained(
         str(base_model_path),
