@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Viemmo-1B: Apple Silicon MLX Fine-Tuning Executable for Qwen2.5-14B-Instruct
+Viemmo: Apple Silicon MLX Fine-Tuning Executable for Qwen2.5-14B-Instruct
 Runs native QLoRA fine-tuning using Apple MLX framework on M-series chips.
 """
 
@@ -14,7 +14,7 @@ import yaml
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Apple Silicon MLX QLoRA Training Executable for Viemmo-1B.")
+    parser = argparse.ArgumentParser(description="Apple Silicon MLX QLoRA Training Executable for Viemmo.")
     parser.add_argument(
         "--config",
         type=str,
@@ -24,7 +24,7 @@ def main() -> None:
     parser.add_argument(
         "--data",
         type=str,
-        default="../Viemmo-1B-storage/datasets/pilot-sft-v1",
+        default="../Viemmo-storage/datasets/pilot-sft-v1",
         help="Directory containing train.jsonl and validation.jsonl.",
     )
     parser.add_argument(
@@ -54,11 +54,11 @@ def main() -> None:
 
     model_id = cfg.get("model", {}).get("id", "Qwen/Qwen2.5-14B-Instruct")
     train_cfg = cfg.get("training", {})
-    output_dir = Path(args.adapter_path or train_cfg.get("adapter_path", "../Viemmo-1B-storage/adapters/pilot-qwen14b-mlx-lora-v1"))
+    output_dir = Path(args.adapter_path or train_cfg.get("adapter_path", "../Viemmo-storage/adapters/pilot-qwen14b-mlx-lora-v1"))
     output_dir.mkdir(parents=True, exist_ok=True)
 
     print("==================================================")
-    print("      Viemmo-1B Apple Silicon MLX Trainer       ")
+    print("      Viemmo Apple Silicon MLX Trainer       ")
     print("==================================================")
     print(f"Model ID:      {model_id}")
     print(f"Data Dir:      {args.data}")

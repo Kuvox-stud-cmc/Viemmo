@@ -192,7 +192,7 @@ def test_transformers_loader_forces_local_files_only(
 
 
 def test_repository_tiny_set_with_pinned_local_tokenizer() -> None:
-    tokenizer_path = Path("D:/Viemmo/Viemmo-1B-storage/upstream/OLMo-2-0425-1B-Instruct")
+    tokenizer_path = Path("D:/Viemmo/Viemmo-storage/upstream/OLMo-2-0425-1B-Instruct")
     if not tokenizer_path.exists():
         pytest.skip("Pinned tokenizer is not available in this checkout")
     tokenizer = LocalGPT2Tokenizer(tokenizer_path)

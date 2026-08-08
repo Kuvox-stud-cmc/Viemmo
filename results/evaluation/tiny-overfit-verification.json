@@ -1,6 +1,6 @@
 {
-  "adapter_path": "D:\\Viemmo\\Viemmo-1B-storage\\adapters\\tiny-overfit-v1",
-  "base_model_path": "D:/Viemmo/Viemmo-1B-storage/upstream/OLMo-2-0425-1B-Instruct",
+  "adapter_path": "D:\\Viemmo\\Viemmo-storage\\adapters\\tiny-overfit-v1",
+  "base_model_path": "D:/Viemmo/Viemmo-storage/upstream/OLMo-2-0425-1B-Instruct",
   "base_model_unaltered": true,
   "peft_reload_successful": true,
   "total_examples": 30,

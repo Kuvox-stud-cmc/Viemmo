@@ -124,7 +124,7 @@ def create_blind_evaluation_pack(
 
     # Generate Human Review Sheet Markdown
     md_lines = [
-        "# 📝 Viemmo-1B Double-Blind Human Review Sheet\n",
+        "# 📝 Viemmo Double-Blind Human Review Sheet\n",
         "**Instructions:** Rate each anonymized model response on a 0 to 3 scale:\n",
         "- **0:** Unacceptable / Completely Wrong\n",
         "- **1:** Poor / Partial Errors\n",
@@ -295,7 +295,7 @@ def main() -> None:
     args = parser.parse_args()
 
     print(f"==================================================")
-    print(f"     Viemmo-1B Double-Blind Human Evaluation      ")
+    print(f"     Viemmo Double-Blind Human Evaluation      ")
     print(f"==================================================")
 
     if args.mode == "prepare":

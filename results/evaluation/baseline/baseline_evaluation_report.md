@@ -1,4 +1,4 @@
-# Viemmo-1B: Phase 2 Baseline Model Evaluation Report
+# Viemmo: Phase 2 Baseline Model Evaluation Report
 
 **Model:** `allenai/OLMo-2-0425-1B-Instruct` (Variant A)  
 **Quantization:** NF4 4-bit (`bnb_4bit_use_double_quant=True`, `compute_dtype=torch.bfloat16`)  

@@ -1,8 +1,8 @@
 {
-  "adapter_name": "Viemmo-1B-Variant-C-Pilot-LoRA",
+  "adapter_name": "Viemmo-Variant-C-Pilot-LoRA",
   "variant": "Variant C",
-  "adapter_directory": "..\\Viemmo-1B-storage\\adapters\\tiny-overfit-v1",
-  "base_model_id": "D:/Viemmo/Viemmo-1B-storage/upstream/OLMo-2-0425-1B-Instruct",
+  "adapter_directory": "..\\Viemmo-storage\\adapters\\tiny-overfit-v1",
+  "base_model_id": "D:/Viemmo/Viemmo-storage/upstream/OLMo-2-0425-1B-Instruct",
   "lora_parameters": {
     "rank": 8,
     "alpha": 16,

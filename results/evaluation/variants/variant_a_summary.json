@@ -2,7 +2,7 @@
   "variant_id": "A",
   "variant_name": "Base Model (OLMo-2-0425-1B-Instruct)",
   "variant_description": "Baseline frozen AllenAI OLMo-2-1B-Instruct model without fine-tuning",
-  "base_model_path": "D:\\Viemmo\\Viemmo-1B-storage\\upstream\\OLMo-2-0425-1B-Instruct",
+  "base_model_path": "D:\\Viemmo\\Viemmo-storage\\upstream\\OLMo-2-0425-1B-Instruct",
   "adapter_path": null,
   "benchmark_file": "data\\evaluation\\vietnamese-pilot-v1.jsonl",
   "git_commit_hash": "fed467cf0e0fb3eaa3559e746947b556d02a97c9",

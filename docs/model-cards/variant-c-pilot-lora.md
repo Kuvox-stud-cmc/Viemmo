@@ -1,9 +1,9 @@
-# 📑 Model Card: Viemmo-1B Variant C (Pilot QLoRA Adapter)
+# 📑 Model Card: Viemmo Variant C (Pilot QLoRA Adapter)
 
 ## 📌 Model Summary
 
-- **Model Name:** Viemmo-1B Variant C (Pilot SFT LoRA Adapter)
-- **Base Model:** `D:/Viemmo/Viemmo-1B-storage/upstream/OLMo-2-0425-1B-Instruct`
+- **Model Name:** Viemmo Variant C (Pilot SFT LoRA Adapter)
+- **Base Model:** `D:/Viemmo/Viemmo-storage/upstream/OLMo-2-0425-1B-Instruct`
 - **Adapter Type:** PEFT QLoRA (4-bit NF4 Base + LoRA Float16)
 - **Target Modules:** `['q_proj', 'v_proj']`
 - **LoRA Hyperparameters:** Rank `r=8`, Alpha `lora_alpha=16`
@@ -36,8 +36,8 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 
-base_model_path = "D:/Viemmo/Viemmo-1B-storage/upstream/OLMo-2-0425-1B-Instruct"
-adapter_path = "../Viemmo-1B-storage/adapters/tiny-overfit-v1"
+base_model_path = "D:/Viemmo/Viemmo-storage/upstream/OLMo-2-0425-1B-Instruct"
+adapter_path = "../Viemmo-storage/adapters/tiny-overfit-v1"
 
 tokenizer = AutoTokenizer.from_pretrained(base_model_path)
 base_model = AutoModelForCausalLM.from_pretrained(

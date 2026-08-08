@@ -9,7 +9,7 @@ from viemmo.training.trainer import train_qlora_model
 def main() -> None:
     load_dotenv()
 
-    parser = argparse.ArgumentParser(description="Configuration-driven QLoRA training for Viemmo-1B with validation & early stopping.")
+    parser = argparse.ArgumentParser(description="Configuration-driven QLoRA training for Viemmo with validation & early stopping.")
     parser.add_argument(
         "--config",
         type=str,
@@ -19,7 +19,7 @@ def main() -> None:
     parser.add_argument(
         "--dataset",
         type=str,
-        default="../Viemmo-1B-storage/datasets/pilot-sft-v1/train.jsonl",
+        default="../Viemmo-storage/datasets/pilot-sft-v1/train.jsonl",
         help="Path to JSONL training dataset.",
     )
     parser.add_argument(
@@ -44,7 +44,7 @@ def main() -> None:
     args = parser.parse_args()
 
     if args.output_dir is None:
-        storage_root = os.environ.get("LLM_STORAGE_ROOT", "../Viemmo-1B-storage")
+        storage_root = os.environ.get("LLM_STORAGE_ROOT", "../Viemmo-storage")
         if storage_root.startswith("/") and len(storage_root) > 2 and storage_root[2] == "/":
             storage_root = f"{storage_root[1].upper()}:{storage_root[2:]}"
 
@@ -62,7 +62,7 @@ def main() -> None:
         output_dir = Path(args.output_dir)
 
     print(f"==================================================")
-    print(f"       Viemmo-1B QLoRA Training Executable       ")
+    print(f"       Viemmo QLoRA Training Executable       ")
     print(f"==================================================")
     print(f"Config File:  {args.config}")
     print(f"Train Data:   {args.dataset}")

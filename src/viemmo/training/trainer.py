@@ -90,7 +90,7 @@ def train_qlora_model(
     model_id = cfg.get("model", {}).get("id", "")
     model_dirname = model_id.split("/")[-1] if "/" in model_id else model_id
 
-    storage_root = os.environ.get("LLM_STORAGE_ROOT", "../Viemmo-1B-storage")
+    storage_root = os.environ.get("LLM_STORAGE_ROOT", "../Viemmo-storage")
     if storage_root.startswith("/") and len(storage_root) > 2 and storage_root[2] == "/":
         storage_root = f"{storage_root[1].upper()}:{storage_root[2:]}"
 
@@ -107,7 +107,7 @@ def train_qlora_model(
         model_path = f"{model_path[1].upper()}:{model_path[2:]}"
 
     if not model_path or not Path(model_path).exists():
-        raise FileNotFoundError(f"Base model path '{model_path}' does not exist. Download the model to Viemmo-1B-storage/upstream/{model_dirname}/")
+        raise FileNotFoundError(f"Base model path '{model_path}' does not exist. Download the model to Viemmo-storage/upstream/{model_dirname}/")
 
     use_bf16 = torch.cuda.is_available() and torch.cuda.is_bf16_supported()
     compute_dtype = torch.bfloat16 if use_bf16 else torch.float16

@@ -44,7 +44,7 @@
   },
   "model_id": "allenai/OLMo-2-0425-1B-Instruct",
   "dataset_path": "data\\training\\tiny-sft-v1.jsonl",
-  "output_adapter_dir": "D:\\Viemmo\\Viemmo-1B-storage\\adapters\\tiny-overfit-v1",
+  "output_adapter_dir": "D:\\Viemmo\\Viemmo-storage\\adapters\\tiny-overfit-v1",
   "trainable_parameters": 1048576,
   "all_parameters": 1485965312,
   "trainable_ratio_percent": 0.0706,

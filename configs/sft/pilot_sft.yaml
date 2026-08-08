@@ -1,5 +1,5 @@
 # ==============================================================================
-# Viemmo-1B: Phase 5 Pilot QLoRA Fine-Tuning Configuration
+# Viemmo: Phase 5 Pilot QLoRA Fine-Tuning Configuration
 # ==============================================================================
 # Target Hardware: Consumer 4 GB VRAM GPUs (NVIDIA GTX 1650 Ti / Turing / Ampere)
 # Dataset Size: 500 – 2,000 reviewed Vietnamese SFT instruction examples

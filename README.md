@@ -67,9 +67,9 @@ They are not suitable for full-parameter model training or large-model fine-tuni
 ## Get started
 
 ```bash
-git clone https://github.com/Kuvox-stud-cmc/Viemmo-1B.git
+git clone https://github.com/Kuvox-stud-cmc/Viemmo.git
 
-cd Viemmo-1B
+cd Viemmo
 
 python -m venv .venv
 
@@ -81,6 +81,10 @@ source .venv/bin/activate
 
 # Then install all dependencies in requirements.txt
 pip install -r requirements.txt
+
+# If developing on Mac
+pip install mlx mlx-lm pyyaml
+
 ```
 
 ## Current status
@@ -163,7 +167,7 @@ The token-ceiling count is retained as a baseline limitation and must be reporte
 ## Repository structure
 
 ```text
-Viemmo/Viemmo-1B/
+Viemmo/Viemmo/
 ├── README.md
 ├── requirements.txt
 ├── .gitignore
@@ -214,7 +218,7 @@ Viemmo/Viemmo-1B/
 Models, datasets, adapters, and checkpoints must not be committed to Git.
 
 ```text
-Viemmo/Viemmo-1B-storage/
+Viemmo/Viemmo-storage/
 ├── upstream/
 │   ├── OLMo-2-0425-1B-Instruct/
 │   ├── Qwen2.5-1.5B-Instruct/
@@ -231,7 +235,7 @@ Viemmo/Viemmo-1B-storage/
 ├── gguf/
 └── cache/
 ```
-Dowload the model `Viemmo-1B-datasets.rar` from One Drive if you are a part of the research team, then change the name to `datasets` and replace the datasets with it.
+Dowload the model `Viemmo-datasets.rar` from One Drive if you are a part of the research team, then change the name to `datasets` and replace the datasets with it.
 The upstream checkpoint is treated as immutable.
 
 Git stores only:

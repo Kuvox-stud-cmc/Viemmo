@@ -23,7 +23,7 @@ def normalize_path(path_str: Optional[str]) -> Optional[Path]:
         path_str = f"{path_str[1].upper()}:{path_str[2:]}"
     p = Path(path_str)
     if not p.exists() and not p.is_absolute():
-        storage_root = os.environ.get("LLM_STORAGE_ROOT", "../Viemmo-1B-storage")
+        storage_root = os.environ.get("LLM_STORAGE_ROOT", "../Viemmo-storage")
         if storage_root.startswith("/") and len(storage_root) > 2 and storage_root[2] == "/":
             storage_root = f"{storage_root[1].upper()}:{storage_root[2:]}"
         alt = Path(storage_root) / path_str
@@ -96,7 +96,7 @@ def evaluate_variant(
         raw_base_path = model_path_override
     elif variant_base_model:
         # Resolve relative to storage root
-        storage_root = os.environ.get("LLM_STORAGE_ROOT", "../Viemmo-1B-storage")
+        storage_root = os.environ.get("LLM_STORAGE_ROOT", "../Viemmo-storage")
         if storage_root.startswith("/") and len(storage_root) > 2 and storage_root[2] == "/":
             storage_root = f"{storage_root[1].upper()}:{storage_root[2:]}"
         candidate = Path(storage_root) / variant_base_model
@@ -105,7 +105,7 @@ def evaluate_variant(
         else:
             raw_base_path = variant_base_model
     else:
-        raw_base_path = os.environ.get("MODEL_PATH") or "../Viemmo-1B-storage/upstream/OLMo-2-0425-1B-Instruct"
+        raw_base_path = os.environ.get("MODEL_PATH") or "../Viemmo-storage/upstream/OLMo-2-0425-1B-Instruct"
     base_model_path = normalize_path(raw_base_path)
 
     if not base_model_path or not base_model_path.exists():

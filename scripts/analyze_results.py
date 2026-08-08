@@ -320,7 +320,7 @@ def analyze_results(
         telemetry_fig_png = telemetry_fig_svg
 
     analysis_report = {
-        "analysis_title": "Viemmo-1B Phase 6 Variant Comparison Analysis",
+        "analysis_title": "Viemmo Phase 6 Variant Comparison Analysis",
         "outcome_verdict": outcome,
         "narrative": narrative,
         "telemetry_summary": telemetry_data,
@@ -338,7 +338,7 @@ def analyze_results(
     report_json_path.write_text(json.dumps(analysis_report, indent=2, ensure_ascii=False), encoding="utf-8")
 
     print(f"\n==================================================")
-    print(f"   Viemmo-1B Phase 6 Result Analysis Complete")
+    print(f"   Viemmo Phase 6 Result Analysis Complete")
     print(f"==================================================")
     print(f"Outcome Verdict:  {outcome}")
     print(f"Narrative:        {narrative}")

@@ -1,5 +1,5 @@
 # ==============================================================================
-# Viemmo-1B: Qwen2.5-1.5B QLoRA Fine-Tuning Configuration
+# Viemmo: Qwen2.5-1.5B QLoRA Fine-Tuning Configuration
 # ==============================================================================
 # Target Hardware: Consumer 4 GB VRAM GPUs (NVIDIA GTX 1650 Ti / Turing / Ampere)
 # Base Model: Qwen/Qwen2.5-1.5B-Instruct (multilingual, native Vietnamese)

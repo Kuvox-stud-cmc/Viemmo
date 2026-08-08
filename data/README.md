@@ -28,7 +28,7 @@ Authoring records additionally require `author_id`, `reviewer_id`, and `review_s
 ## External layout
 
 ```text
-Viemmo-1B-storage/datasets/pilot-sft-v1/
+Viemmo-storage/datasets/pilot-sft-v1/
 ├── source/
 │   ├── project-authored-v1.jsonl
 │   └── review-log.jsonl
@@ -59,7 +59,7 @@ without the authoring-only flag.
 Build the pilot after human authoring and review are complete:
 
 ```powershell
-$env:LLM_STORAGE_ROOT = "D:\Viemmo\Viemmo-1B-storage"
+$env:LLM_STORAGE_ROOT = "D:\Viemmo\Viemmo-storage"
 python scripts/prepare_dataset.py build --config configs/datasets/pilot-sft-v1.yaml
 ```
 

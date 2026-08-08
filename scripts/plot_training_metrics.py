@@ -38,7 +38,7 @@ def generate_svg_loss_curve(
     svg_lines = [
         f'<svg width="{width}" height="{height}" xmlns="http://www.w3.org/2000/svg" style="background-color: #ffffff; font-family: sans-serif;">',
         f'<rect width="{width}" height="{height}" fill="#ffffff"/>',
-        f'<text x="{width/2}" y="{margin/2}" text-anchor="middle" font-size="18" font-weight="bold" fill="#333333">Viemmo-1B QLoRA Fine-Tuning Loss Curve</text>',
+        f'<text x="{width/2}" y="{margin/2}" text-anchor="middle" font-size="18" font-weight="bold" fill="#333333">Viemmo QLoRA Fine-Tuning Loss Curve</text>',
         # Axes
         f'<line x1="{margin}" y1="{height-margin}" x2="{width-margin}" y2="{height-margin}" stroke="#666666" stroke-width="2"/>',
         f'<line x1="{margin}" y1="{margin}" x2="{margin}" y2="{height-margin}" stroke="#666666" stroke-width="2"/>',
@@ -121,7 +121,7 @@ def generate_metrics_summary_and_plot(
         if clean_eval_losses:
             plt.plot(eval_steps, clean_eval_losses, label="Validation Loss", color="#ff7f0e", linewidth=2.5, linestyle="--", marker="s")
 
-        plt.title("Viemmo-1B QLoRA Fine-Tuning Loss Curve", fontsize=14, fontweight="bold", pad=15)
+        plt.title("Viemmo QLoRA Fine-Tuning Loss Curve", fontsize=14, fontweight="bold", pad=15)
         plt.xlabel("Step", fontsize=12)
         plt.ylabel("Cross-Entropy Loss", fontsize=12)
         plt.legend(fontsize=11, loc="upper right")
@@ -162,7 +162,7 @@ def generate_metrics_summary_and_plot(
 
     # 3. Generate Training Report Markdown
     env = run_data.get("environment", {})
-    report_content = f"""# 📈 Viemmo-1B QLoRA Training & Performance Report
+    report_content = f"""# 📈 Viemmo QLoRA Training & Performance Report
 
 This report documents the performance metrics, loss curves, latency profile, and VRAM memory allocation across the training lifecycle.
 
@@ -233,7 +233,7 @@ def main() -> None:
     args = parser.parse_args()
 
     print(f"==================================================")
-    print(f"   Viemmo-1B Training Metrics & Plotting Engine   ")
+    print(f"   Viemmo Training Metrics & Plotting Engine   ")
     print(f"==================================================")
 
     generate_metrics_summary_and_plot(

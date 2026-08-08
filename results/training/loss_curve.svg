@@ -1,6 +1,6 @@
 <svg width="800" height="500" xmlns="http://www.w3.org/2000/svg" style="background-color: #ffffff; font-family: sans-serif;">
 <rect width="800" height="500" fill="#ffffff"/>
-<text x="400.0" y="30.0" text-anchor="middle" font-size="18" font-weight="bold" fill="#333333">Viemmo-1B QLoRA Fine-Tuning Loss Curve</text>
+<text x="400.0" y="30.0" text-anchor="middle" font-size="18" font-weight="bold" fill="#333333">Viemmo QLoRA Fine-Tuning Loss Curve</text>
 <line x1="60" y1="440" x2="740" y2="440" stroke="#666666" stroke-width="2"/>
 <line x1="60" y1="60" x2="60" y2="440" stroke="#666666" stroke-width="2"/>
 <text x="400.0" y="485" text-anchor="middle" font-size="14" fill="#555555">Training Step</text>

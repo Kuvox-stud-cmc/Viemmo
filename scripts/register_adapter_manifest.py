@@ -15,7 +15,7 @@ def normalize_path(path_str: str) -> Path:
         path_str = f"{path_str[1].upper()}:{path_str[2:]}"
     p = Path(path_str)
     if not p.exists() and not p.is_absolute():
-        storage_root = os.environ.get("LLM_STORAGE_ROOT", "../Viemmo-1B-storage")
+        storage_root = os.environ.get("LLM_STORAGE_ROOT", "../Viemmo-storage")
         if storage_root.startswith("/") and len(storage_root) > 2 and storage_root[2] == "/":
             storage_root = f"{storage_root[1].upper()}:{storage_root[2:]}"
         alt = Path(storage_root) / path_str
@@ -105,7 +105,7 @@ def register_adapter_manifest(
 
     # 3. Create Manifest JSON
     manifest_data = {
-        "adapter_name": "Viemmo-1B-Variant-C-Pilot-LoRA",
+        "adapter_name": "Viemmo-Variant-C-Pilot-LoRA",
         "variant": "Variant C",
         "adapter_directory": str(adapter_dir),
         "base_model_id": base_model_name,
@@ -124,11 +124,11 @@ def register_adapter_manifest(
     print(f"  ✓ Saved adapter manifest JSON to: {manifest_path}")
 
     # 4. Create Model Card Markdown
-    model_card_content = f"""# 📑 Model Card: Viemmo-1B Variant C (Pilot QLoRA Adapter)
+    model_card_content = f"""# 📑 Model Card: Viemmo Variant C (Pilot QLoRA Adapter)
 
 ## 📌 Model Summary
 
-- **Model Name:** Viemmo-1B Variant C (Pilot SFT LoRA Adapter)
+- **Model Name:** Viemmo Variant C (Pilot SFT LoRA Adapter)
 - **Base Model:** `{base_model_name}`
 - **Adapter Type:** PEFT QLoRA (4-bit NF4 Base + LoRA Float16)
 - **Target Modules:** `{list(target_modules) if isinstance(target_modules, (set, list, tuple)) else target_modules}`
@@ -159,7 +159,7 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 
-base_model_path = "D:/Viemmo/Viemmo-1B-storage/upstream/OLMo-2-0425-1B-Instruct"
+base_model_path = "D:/Viemmo/Viemmo-storage/upstream/OLMo-2-0425-1B-Instruct"
 adapter_path = "{adapter_dir.as_posix()}"
 
 tokenizer = AutoTokenizer.from_pretrained(base_model_path)
@@ -186,7 +186,7 @@ def main() -> None:
     parser.add_argument(
         "--adapter-dir",
         type=str,
-        default="../Viemmo-1B-storage/adapters/tiny-overfit-v1",
+        default="../Viemmo-storage/adapters/tiny-overfit-v1",
         help="Path to saved LoRA adapter directory.",
     )
     parser.add_argument(
@@ -205,7 +205,7 @@ def main() -> None:
     args = parser.parse_args()
 
     print(f"==================================================")
-    print(f"   Viemmo-1B Adapter Manifest Registration Engine ")
+    print(f"   Viemmo Adapter Manifest Registration Engine ")
     print(f"==================================================")
 
     register_adapter_manifest(

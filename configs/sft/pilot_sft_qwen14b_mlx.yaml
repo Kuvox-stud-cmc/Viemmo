@@ -1,5 +1,5 @@
 # ==============================================================================
-# Viemmo-1B: Qwen2.5-14B MLX QLoRA Fine-Tuning Configuration
+# Viemmo: Qwen2.5-14B MLX QLoRA Fine-Tuning Configuration
 # ==============================================================================
 # Target Hardware: Apple Silicon Mac Mini M4 (32 GB Unified Memory)
 # Framework: Apple MLX (mlx-lm)
@@ -13,7 +13,7 @@
 # ==============================================================================
 
 model:
-  id: Qwen/Qwen2.5-14B-Instruct
+  id: mlx-community/Qwen2.5-14B-Instruct-4bit
   family: qwen2
 
 quantization:
@@ -37,5 +37,5 @@ training:
   steps_per_report: 10
   steps_per_eval: 50
   save_every: 100
-  adapter_path: ../Viemmo-1B-storage/adapters/pilot-qwen14b-mlx-lora-v1
+  adapter_path: ../Viemmo-storage/adapters/pilot-qwen14b-mlx-lora-v1
   seed: 42

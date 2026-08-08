@@ -1,4 +1,4 @@
-# 📈 Viemmo-1B QLoRA Training & Performance Report
+# 📈 Viemmo QLoRA Training & Performance Report
 
 This report documents the performance metrics, loss curves, latency profile, and VRAM memory allocation across the training lifecycle.
 
