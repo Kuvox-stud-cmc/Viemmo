@@ -108,7 +108,9 @@ def evaluate_variant(
         raw_base_path = os.environ.get("MODEL_PATH") or "../Viemmo-storage/upstream/OLMo-2-0425-1B-Instruct"
     base_model_path = normalize_path(raw_base_path)
 
-    if not base_model_path or not base_model_path.exists():
+    is_mlx_variant = (variant_id in ["G", "H", "I", "J"]) or ("mlx" in str(base_model_path).lower()) or ("14b" in str(base_model_path).lower()) or ("32b" in str(base_model_path).lower())
+
+    if not is_mlx_variant and (not base_model_path or not base_model_path.exists()):
         raise FileNotFoundError(f"Base model path '{base_model_path}' not found.")
 
     adapter_path = adapter_path_override or variant_info.get("adapter_path")
