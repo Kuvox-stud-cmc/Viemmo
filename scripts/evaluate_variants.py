@@ -274,9 +274,13 @@ def evaluate_variant(
         }
     elif hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
         device_str = "mps"
-        print("Using Apple Silicon MPS Metal GPU acceleration for PyTorch model...")
+        # Qwen models overflow in FP16 on MPS due to RoPE embeddings; use bfloat16/float32
+        mps_dtype = torch.bfloat16 if hasattr(torch, "bfloat16") else torch.float32
+        if "qwen" in str(base_model_path).lower():
+            mps_dtype = torch.bfloat16
+        print(f"Using Apple Silicon MPS Metal GPU acceleration ({mps_dtype}) for PyTorch model...")
         model_kwargs = {
-            "torch_dtype": torch.float16,
+            "torch_dtype": mps_dtype,
             "attn_implementation": "eager",
         }
     else:
