@@ -1,0 +1,25 @@
+{
+  "variant_id": "G",
+  "variant_name": "Base Model (Qwen2.5-14B-Instruct)",
+  "variant_description": "Flagship Qwen2.5-14B-Instruct baseline model with strong native Vietnamese capability",
+  "base_model_path": "mlx-community/Qwen2.5-14B-Instruct-4bit",
+  "adapter_path": null,
+  "benchmark_file": "data/evaluation/vietnamese-pilot-v1.jsonl",
+  "git_commit_hash": "c78589bcd165097c65f9b68e0221450c72d5770e",
+  "benchmark_checksum": "072f02145fa951d7ee5ae41e058ad6953e16427239f1be5733ad4272e8587f29",
+  "generation_parameters": {
+    "do_sample": false,
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_new_tokens": 256,
+    "seed": 42,
+    "repetition_penalty": 1.1
+  },
+  "total_prompts": 30,
+  "total_generated_tokens": 3668,
+  "total_evaluation_time_sec": 364.53,
+  "average_prompt_latency_sec": 12.151,
+  "average_tokens_per_sec": 10.06,
+  "hit_max_tokens_count": 6,
+  "peak_vram_mb": 0.0
+}

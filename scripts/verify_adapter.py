@@ -55,7 +55,7 @@ def main() -> None:
     if model_path and model_path.startswith("/") and len(model_path) > 2 and model_path[2] == "/":
         model_path = f"{model_path[1].upper()}:{model_path[2:]}"
 
-    storage_root = os.environ.get("LLM_STORAGE_ROOT", "../Viemmo-1B-storage")
+    storage_root = os.environ.get("LLM_STORAGE_ROOT", "../Viemmo-storage")
     if storage_root.startswith("/") and len(storage_root) > 2 and storage_root[2] == "/":
         storage_root = f"{storage_root[1].upper()}:{storage_root[2:]}"
 
@@ -65,7 +65,7 @@ def main() -> None:
     output_log_path = Path("results/evaluation/tiny-overfit-verification.json")
 
     print(f"==================================================")
-    print(f"    Viemmo-1B LoRA Adapter Verification Engine   ")
+    print(f"    Viemmo LoRA Adapter Verification Engine   ")
     print(f"==================================================")
     print(f"Base Model Path: {model_path}")
     print(f"Adapter Path:    {adapter_path}")

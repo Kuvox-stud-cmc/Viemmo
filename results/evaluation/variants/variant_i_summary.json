@@ -1,0 +1,25 @@
+{
+  "variant_id": "I",
+  "variant_name": "Base Model (Qwen2.5-32B-Instruct)",
+  "variant_description": "Ultra-large Qwen2.5-32B-Instruct baseline model",
+  "base_model_path": "mlx-community/Qwen2.5-32B-Instruct-4bit",
+  "adapter_path": null,
+  "benchmark_file": "data/evaluation/vietnamese-pilot-v1.jsonl",
+  "git_commit_hash": "c78589bcd165097c65f9b68e0221450c72d5770e",
+  "benchmark_checksum": "072f02145fa951d7ee5ae41e058ad6953e16427239f1be5733ad4272e8587f29",
+  "generation_parameters": {
+    "do_sample": false,
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_new_tokens": 256,
+    "seed": 42,
+    "repetition_penalty": 1.1
+  },
+  "total_prompts": 30,
+  "total_generated_tokens": 3598,
+  "total_evaluation_time_sec": 787.7,
+  "average_prompt_latency_sec": 26.2566,
+  "average_tokens_per_sec": 4.57,
+  "hit_max_tokens_count": 5,
+  "peak_vram_mb": 0.0
+}

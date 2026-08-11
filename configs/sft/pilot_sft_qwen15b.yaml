@@ -1,0 +1,54 @@
+# ==============================================================================
+# Viemmo: Qwen2.5-1.5B QLoRA Fine-Tuning Configuration
+# ==============================================================================
+# Target Hardware: Consumer 4 GB VRAM GPUs (NVIDIA GTX 1650 Ti / Turing / Ampere)
+# Base Model: Qwen/Qwen2.5-1.5B-Instruct (multilingual, native Vietnamese)
+#
+# Memory Assumptions & Technical Constraints:
+#  - Base Model (NF4 4-bit + Double Quant): ~0.90 GB VRAM
+#  - LoRA Adapter Weights (r=8, q_proj & v_proj): ~0.01 GB VRAM
+#  - Paged 8-bit AdamW Optimizer States: ~0.02 GB VRAM
+#  - Gradient Checkpointing Activations (seq_len 512): ~0.80 GB VRAM
+#  - Peak Allocated VRAM: ~1.7 – 2.0 GB VRAM (comfortable within 4.0 GB limit)
+#
+# Effective Batch Size Calculation:
+#  - micro_batch_size per device = 1
+#  - gradient_accumulation_steps = 16
+#  - Effective Batch Size = 1 * 16 = 16 sequences per optimization step
+# ==============================================================================
+
+model:
+  id: Qwen/Qwen2.5-1.5B-Instruct
+  family: qwen2
+
+quantization:
+  load_in_4bit: true
+  quant_type: nf4
+  double_quantization: true
+  compute_dtype: float16
+
+lora:
+  rank: 8
+  alpha: 16
+  dropout: 0.05
+  target_modules:
+    - q_proj
+    - v_proj
+
+training:
+  sequence_length: 512
+  micro_batch_size: 1
+  gradient_accumulation_steps: 16
+  gradient_checkpointing: true
+  learning_rate: 0.0001
+  warmup_ratio: 0.03
+  scheduler: cosine
+  optimizer: paged_adamw_8bit
+  precision: float16
+  num_train_epochs: 3
+  logging_steps: 10
+  eval_steps: 50
+  save_steps: 100
+  save_total_limit: 3
+  early_stopping_patience: 3
+  seed: 42

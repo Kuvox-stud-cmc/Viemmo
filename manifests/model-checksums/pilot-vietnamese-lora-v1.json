@@ -1,0 +1,53 @@
+{
+  "adapter_name": "Viemmo-Variant-C-Pilot-LoRA",
+  "variant": "Variant C",
+  "adapter_directory": "..\\Viemmo-storage\\adapters\\tiny-overfit-v1",
+  "base_model_id": "D:/Viemmo/Viemmo-storage/upstream/OLMo-2-0425-1B-Instruct",
+  "lora_parameters": {
+    "rank": 8,
+    "alpha": 16,
+    "target_modules": [
+      "q_proj",
+      "v_proj"
+    ]
+  },
+  "total_size_mb": 10.83,
+  "is_lightweight_under_50mb": true,
+  "files": {
+    "adapter_config.json": {
+      "sha256": "0cc29809b04df5889cb6e3b4b6b61c481f7936683ab9329f52a69263d1d3e85b",
+      "size_bytes": 1159,
+      "size_mb": 0.001
+    },
+    "adapter_model.safetensors": {
+      "sha256": "d8e06794bc48b288778a77c80114591399a1f3141bcc4bb16201f9ed7d43e364",
+      "size_bytes": 4202720,
+      "size_mb": 4.008
+    },
+    "chat_template.jinja": {
+      "sha256": "8856beb464c6964117a5b9dff8f160312537f174826305fef5607e4c632daee8",
+      "size_bytes": 516,
+      "size_mb": 0.0
+    },
+    "README.md": {
+      "sha256": "c500c06a33415461c6e6b1e0c0d7842cea2cb1f2edabb2e132017d2bd2af68a2",
+      "size_bytes": 5274,
+      "size_mb": 0.005
+    },
+    "tokenizer.json": {
+      "sha256": "18e309ad7f9c60037eaf26aca401a96128187cad2bdfa01a508dca7526bf6300",
+      "size_bytes": 7137558,
+      "size_mb": 6.807
+    },
+    "tokenizer_config.json": {
+      "sha256": "b507163276b15ea8d0329c2866b31de9d399bac34e84290d58f6e2d92ed18bb0",
+      "size_bytes": 380,
+      "size_mb": 0.0
+    },
+    "training_summary.json": {
+      "sha256": "0fb66989348a4578ebf9b53a70afe6b2afef522a88520b90d3e54f814903c970",
+      "size_bytes": 10009,
+      "size_mb": 0.01
+    }
+  }
+}

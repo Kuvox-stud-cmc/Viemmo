@@ -1,6 +1,6 @@
 {
   "model": "allenai/OLMo-2-0425-1B-Instruct",
-  "model_path": "D:/Viemmo/Viemmo-1B-storage/upstream/OLMo-2-0425-1B-Instruct",
+  "model_path": "D:/Viemmo/Viemmo-storage/upstream/OLMo-2-0425-1B-Instruct",
   "model_type": "olmo2",
   "quantization": "NF4 4-bit",
   "prompt": [

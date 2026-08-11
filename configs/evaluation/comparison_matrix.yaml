@@ -1,0 +1,90 @@
+# ==============================================================================
+# Viemmo: Phase 6 Comparative Evaluation Matrix Configuration
+# ==============================================================================
+# Benchmark Dataset: data/evaluation/vietnamese-pilot-v1.jsonl (30 frozen prompts)
+# Target Hardware: Consumer 4 GB VRAM GPU (GTX 1650 Ti)
+#
+# Variants A-D: OLMo-2-1B-Instruct (English-dominant baseline)
+# Variants E-H: Qwen2.5 (multilingual with native Vietnamese)
+# ==============================================================================
+
+benchmark_dataset: data/evaluation/vietnamese-pilot-v1.jsonl
+
+generation_parameters:
+  do_sample: false
+  temperature: 0.0
+  top_p: 1.0
+  max_new_tokens: 256
+  seed: 42
+  repetition_penalty: 1.1
+
+variants:
+  A:
+    name: Base Model (OLMo-2-0425-1B-Instruct)
+    description: Baseline frozen AllenAI OLMo-2-1B-Instruct model without fine-tuning
+    type: base_model
+    base_model_path: upstream/OLMo-2-0425-1B-Instruct
+    adapter_path: null
+
+  B:
+    name: Overfit Pilot Model (Variant B)
+    description: OLMo-2 base model with 40-epoch tiny overfitting experiment LoRA adapter
+    type: lora_adapter
+    base_model_path: upstream/OLMo-2-0425-1B-Instruct
+    adapter_path: ../Viemmo-storage/adapters/tiny-overfit-v1
+
+  C:
+    name: Fine-Tuned Pilot Model (Variant C)
+    description: OLMo-2 base model with Phase 5 Vietnamese SFT pilot LoRA adapter
+    type: lora_adapter
+    base_model_path: upstream/OLMo-2-0425-1B-Instruct
+    adapter_path: ../Viemmo-storage/adapters/pilot-vietnamese-lora-v1
+
+  D:
+    name: Quantized OLMo-2 (Variant D)
+    description: OLMo-2 with pilot LoRA merged and GGUF quantized for offline deployment
+    type: gguf
+    base_model_path: upstream/OLMo-2-0425-1B-Instruct
+    adapter_path: null
+
+  E:
+    name: Base Model (Qwen2.5-1.5B-Instruct)
+    description: Baseline Qwen2.5-1.5B-Instruct with native Vietnamese capability, no fine-tuning
+    type: base_model
+    base_model_path: upstream/Qwen2.5-1.5B-Instruct
+    adapter_path: null
+
+  F:
+    name: Fine-Tuned Qwen2.5-1.5B (Variant F)
+    description: Qwen2.5-1.5B with Vietnamese SFT pilot LoRA adapter (same 1800-sample dataset)
+    type: lora_adapter
+    base_model_path: upstream/Qwen2.5-1.5B-Instruct
+    adapter_path: ../Viemmo-storage/adapters/pilot-qwen15b-lora-v1
+
+  G:
+    name: Base Model (Qwen2.5-14B-Instruct)
+    description: Flagship Qwen2.5-14B-Instruct baseline model with strong native Vietnamese capability
+    type: base_model
+    base_model_path: upstream/Qwen2.5-14B-Instruct
+    adapter_path: null
+
+  H:
+    name: Fine-Tuned Qwen2.5-14B (Variant H)
+    description: Qwen2.5-14B fine-tuned on Apple Silicon M4 32GB via MLX QLoRA
+    type: lora_adapter
+    base_model_path: upstream/Qwen2.5-14B-Instruct
+    adapter_path: ../Viemmo-storage/adapters/pilot-qwen14b-mlx-lora-v1
+
+  I:
+    name: Base Model (Qwen2.5-32B-Instruct)
+    description: Ultra-large Qwen2.5-32B-Instruct baseline model
+    type: base_model
+    base_model_path: upstream/Qwen2.5-32B-Instruct
+    adapter_path: null
+
+  J:
+    name: Fine-Tuned Qwen2.5-32B (Variant J)
+    description: Qwen2.5-32B fine-tuned on Apple Silicon M4 32GB via MLX QLoRA
+    type: lora_adapter
+    base_model_path: upstream/Qwen2.5-32B-Instruct
+    adapter_path: ../Viemmo-storage/adapters/pilot-qwen32b-mlx-lora-v1
